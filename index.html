@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sreelakshmi Prakash</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Product portfolio of Sreelakshmi Prakash: three evidence-led case studies in fintech onboarding, AI evaluation and consumer e-commerce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an evidence ledger. Hero = name + three headline numbers with their sample sizes; each case study reads Question → Evidence → Decision. */
+:root{
+  --bg:#F6F7F4; --surface:#FFFFFF; --fg:#16201C; --muted:#5A6661; --line:#DCE1DD;
+  --ink:#1D5C4C;            /* page accent: deep green */
+  --c1:#4B44D6; --c1-soft:#ECEBFD;   /* AI eval */
+  --c2:#0E7369; --c2-soft:#E3F3F0;   /* KYC teardown */
+  --c3:#C04A12; --c3-soft:#FCEDE4;   /* dishwasher */
+  --font-display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --font-body:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --shadow:0 1px 2px rgba(22,32,28,.06), 0 8px 24px rgba(22,32,28,.06);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101614; --surface:#171F1C; --fg:#E8EEEA; --muted:#9AA7A1; --line:#2A3531; --ink:#7FD1B6;
+  --c1:#A5A0FF; --c1-soft:#22213D; --c2:#5FD0C2; --c2-soft:#14302C; --c3:#FF9A66; --c3-soft:#3A2418;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#101614; --surface:#171F1C; --fg:#E8EEEA; --muted:#9AA7A1; --line:#2A3531; --ink:#7FD1B6;
+  --c1:#A5A0FF; --c1-soft:#22213D; --c2:#5FD0C2; --c2-soft:#14302C; --c3:#FF9A66; --c3-soft:#3A2418;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); color-scheme:dark;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.mono{font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:-.5px;text-decoration:none}
+.mono span{color:var(--ink)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:15px;font-weight:500}
+nav ul a{text-decoration:none;color:var(--muted)} nav ul a:hover{color:var(--fg)}
+/* hero */
+.hero{padding-block:72px 40px}
+.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,8vw,96px);line-height:.98;letter-spacing:-.035em;margin:14px 0 22px;text-wrap:balance}
+.lede{font-size:clamp(19px,2.2vw,23px);color:var(--muted);max-width:40ch;margin:0 0 28px;text-wrap:balance}
+.lede b{color:var(--fg);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1.5px solid var(--fg);transition:transform .15s ease}
+.btn.primary{background:var(--fg);color:var(--bg)}
+.btn:hover{transform:translateY(-2px)}
+/* evidence strip */
+.ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:56px;border-top:2px solid var(--fg)}
+.cell{padding:22px 24px 6px 0;border-right:1px solid var(--line);min-width:0}
+.cell + .cell{padding-left:24px}
+.cell:last-child{border-right:0}
+.num{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.03em}
+.cell:nth-child(1) .num{color:var(--c1)} .cell:nth-child(2) .num{color:var(--c2)} .cell:nth-child(3) .num{color:var(--c3)}
+.cell p{margin:10px 0 6px;font-size:15.5px;line-height:1.45}
+.n{font-family:var(--font-mono);font-size:12.5px;color:var(--muted)}
+/* sections */
+section{padding-block:64px}
+h2{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1.05;margin:0 0 10px}
+.sub{color:var(--muted);margin:0 0 28px;max-width:60ch}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filters button{font:500 14px var(--font-body);padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+/* case cards */
+.cases{display:grid;gap:22px}
+.case{--c:var(--c1);--cs:var(--c1-soft);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease}
+.case:hover{transform:translateY(-3px)}
+.case.t2{--c:var(--c2);--cs:var(--c2-soft)} .case.t3{--c:var(--c3);--cs:var(--c3-soft)}
+.case .side{background:var(--cs);padding:30px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tag{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.case h3{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,2.6vw,30px);line-height:1.12;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.big{font-family:var(--font-display);font-weight:800;font-size:56px;line-height:1;color:var(--c);letter-spacing:-.03em;margin-top:auto}
+.big small{display:block;font:500 14.5px/1.4 var(--font-body);color:var(--fg);letter-spacing:0;margin-top:8px;max-width:30ch}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{font-size:14px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:999px;background:var(--surface);border:1.5px solid var(--c);color:var(--fg)}
+.links a.main{background:var(--c);color:var(--surface);border-color:var(--c)}
+.case .body{padding:30px;display:grid;gap:16px;min-width:0}
+.step{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:0;padding-bottom:0}
+.step dt{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c);padding-top:3px}
+.step dd{margin:0;font-size:16px}
+.tools{display:flex;flex-wrap:wrap;gap:6px}
+.tools span{font-family:var(--font-mono);font-size:12px;padding:3px 9px;border-radius:6px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+/* process */
+.process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:s}
+.proc{border-top:2px solid var(--fg);padding-top:14px;min-width:0}
+.proc b{display:block;font-family:var(--font-display);font-size:20px;letter-spacing:-.01em;margin-bottom:6px}
+.proc b::before{counter-increment:s;content:counter(s) " ";color:var(--ink)}
+.proc p{margin:0;color:var(--muted);font-size:15.5px}
+/* experience */
+.exp{display:grid;gap:0;border-top:1px solid var(--line)}
+.role{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding-block:22px;border-bottom:1px solid var(--line)}
+.when{font-family:var(--font-mono);font-size:13px;color:var(--muted);padding-top:4px}
+.role h4{margin:0 0 4px;font-size:19px;font-weight:600}
+.role .org{color:var(--ink);font-weight:600}
+.role ul{margin:8px 0 0;padding-left:18px;color:var(--muted)} .role li{margin:3px 0}
+.subhead{font-family:var(--font-display);font-weight:700;font-size:24px;letter-spacing:-.01em;margin:40px 0 10px}
+.kit{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.kit span{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14.5px}
+/* contact */
+.contact{background:var(--fg);color:var(--bg);border-radius:26px;padding:44px clamp(24px,5vw,56px);display:grid;gap:18px}
+.contact h2{color:var(--bg)}
+.contact p{margin:0;opacity:.8;max-width:52ch}
+.mailrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.mail{font-family:var(--font-mono);font-size:clamp(15px,2.2vw,19px);user-select:all;word-break:break-all}
+.contact button,.contact a.btn{font:600 14px var(--font-body);padding:10px 18px;border-radius:999px;border:1.5px solid var(--bg);background:transparent;color:var(--bg);cursor:pointer;text-decoration:none}
+footer{padding-block:28px 40px;color:var(--muted);font-size:13.5px}
+@media (max-width:860px){
+  .case{grid-template-columns:1fr}
+  .process{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role{grid-template-columns:1fr;gap:4px}
+  nav ul{display:none}
+}
+@media (max-width:560px){
+  .ledger{grid-template-columns:1fr}
+  .cell,.cell + .cell{padding:18px 0 10px;border-right:0;border-bottom:1px solid var(--line)}
+  .process{grid-template-columns:1fr}
+  .step{grid-template-columns:1fr;gap:4px}
+  .big{font-size:46px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="mono" href="#top">SP<span>.</span></a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#how">How I work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Product portfolio</div>
+      <h1>Sreelakshmi Prakash</h1>
+      <p class="lede">I start from <b>real evidence</b>, find the root cause, and end with <b>one decision</b> and how we'd know it worked.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#work">See the case studies</a>
+        <a class="btn" href="https://www.linkedin.com/in/sreelakshmiprakash13" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="ledger" aria-label="Headline findings">
+        <div class="cell"><div class="num">96%</div><p>of KYC uploads auto-accepted by my routing rule, with zero wrong documents let through</p><div class="n">n = 72 test uploads</div></div>
+        <div class="cell"><div class="num">6 of 39</div><p>KYC complaints were borrowers locked out by an old phone number, and all 6 were blocked</p><div class="n">n = 102 tagged Play Store reviews</div></div>
+        <div class="cell"><div class="num">37%</div><p>of unhappy dishwasher buyers had cleaning-expectation gaps, not a kitchen-fit problem</p><div class="n">n = 485 Flipkart reviews</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>Case studies</h2>
+      <p class="sub">Three independent projects. Each one is a proposal or an evaluation, not a launched feature, and each says what would change my mind.</p>
+      <div class="filters" role="group" aria-label="Filter case studies">
+        <button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+        <button type="button" id="f-fin" data-f="fintech" aria-pressed="false">Fintech</button>
+        <button type="button" id="f-ai" data-f="ai" aria-pressed="false">AI</button>
+        <button type="button" id="f-con" data-f="consumer" aria-pressed="false">Consumer</button>
+      </div>
+      <div class="cases">
+
+        <article class="case t1" data-tags="fintech ai">
+          <div class="side">
+            <div class="tag">AI evaluation · Lending</div>
+            <h3>When should a lender trust AI to read KYC documents?</h3>
+            <div class="big">0<small>wrong documents passed, after I found the model was 100% confident on every misread PAN</small></div>
+            <div class="links">
+              <a class="main" data-notion="7493cf6921f48255bcbe01a69c53103e" href="#" target="_blank" rel="noopener">Read the case study</a>
+              <a href="https://colab.research.google.com/drive/18BqDUfkCWQHm5Rpt2-ifFCBHhbVCy37N?usp=sharing" target="_blank" rel="noopener">Notebook</a>
+            </div>
+          </div>
+          <dl class="body">
+            <div class="step"><dt>Question</dt><dd>Which AI-read PAN and Aadhaar documents can a lender safely auto-accept?</dd></div>
+            <div class="step"><dt>Evidence</dt><dd>24 specimen documents as PDF, scan and phone photo, scored field by field against ground truth. Accuracy was 98–100%, but all 4 errors came with full confidence.</dd></div>
+            <div class="step"><dt>Decision</dt><dd>Auto-accept only when free format checks pass and confidence is at least 0.95. Pilot on the upload path with human spot checks, at about ₹0.11 per document.</dd></div>
+            <div class="tools"><span>Python</span><span>Gemini API</span><span>Google Colab</span><span>Eval design</span></div>
+          </dl>
+        </article>
+
+        <article class="case t2" data-tags="fintech">
+          <div class="side">
+            <div class="tag">Fintech onboarding</div>
+            <h3>Why borrowers who changed their phone number can't finish KYC</h3>
+            <div class="big">3 apps<small>walked through end to end: Navi, KreditBee and Money View</small></div>
+            <div class="links">
+              <a class="main" data-notion="4093cf6921f481a684ecf3e61546819b" href="#" target="_blank" rel="noopener">Read the case study</a>
+              <a href="https://www.figma.com/design/jKBAlixuclvfFe1NVdcEnW" target="_blank" rel="noopener">Prototype</a>
+            </div>
+          </div>
+          <dl class="body">
+            <div class="step"><dt>Question</dt><dd>Where do borrowers get stuck at KYC, and what can the product fix?</dd></div>
+            <div class="step"><dt>Evidence</dt><dd>567 KYC reviews collected and 102 tagged. A PAN tied to an old mobile number is a dead end with no self-serve way out, and lenders' own FAQs confirm it.</dd></div>
+            <div class="step"><dt>Decision</dt><dd>Let borrowers move the account in the app after a live selfie and a reverse ₹1 UPI check. Never text the old number. A/B test on 7-day KYC completion with fraud guardrails.</dd></div>
+            <div class="tools"><span>Review analysis</span><span>Figma</span><span>A/B design</span><span>SQL</span><span>RBI / DPDP</span></div>
+          </dl>
+        </article>
+
+        <article class="case t3" data-tags="consumer">
+          <div class="side">
+            <div class="tag">Consumer e-commerce</div>
+            <h3>Will a dishwasher work for my cooking and my kitchen?</h3>
+            <div class="big">12 of 12<small>popular listings were replacement-only, so a wrong purchase can't be returned</small></div>
+            <div class="links">
+              <a class="main" data-notion="3da3cf6921f4807cb691d9238bc5749b" href="#" target="_blank" rel="noopener">Read the case study</a>
+              <a href="https://www.figma.com/design/P4HUX6XmuZWohFMv94StlU" target="_blank" rel="noopener">Prototype</a>
+            </div>
+          </div>
+          <dl class="body">
+            <div class="step"><dt>Question</dt><dd>Why do first-time dishwasher buyers end up unhappy?</dd></div>
+            <div class="step"><dt>Evidence</dt><dd>My first idea, kitchen fit, showed up in about 8 of 485 reviews. Cleaning expectations drove 25 of 67 unhappy ones, so I changed the question.</dd></div>
+            <div class="step"><dt>Decision</dt><dd>A 60-second fit check on the product page: what will and won't clean well, what to prepare, which models fit, with answers passed to the installer.</dd></div>
+            <div class="tools"><span>Discovery</span><span>Reframing</span><span>Figma</span><span>A/B design</span></div>
+          </dl>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How I work</h2>
+      <p class="sub">The same four steps run through every case study above.</p>
+      <div class="process">
+        <div class="proc"><b>Start from evidence</b><p>Reviews, walkthroughs and test data come before opinions.</p></div>
+        <div class="proc"><b>Find the root cause</b><p>Ask why until I reach something the product controls.</p></div>
+        <div class="proc"><b>Decide with trade-offs</b><p>Several options, one chosen, and an honest note on what it costs.</p></div>
+        <div class="proc"><b>Define how we'd know</b><p>A primary metric, guardrails and a sample size before anything is built.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <h2>Experience</h2>
+      <div class="exp">
+        <div class="role">
+          <div class="when">2026 – now</div>
+          <div><h4>Business Analyst - Product &amp; Projects, Retail Finance</h4><div class="org">Mercedes-Benz India</div>
+            <ul>
+              <li>Helped launch a pre-approved loan link: 810 clicks and 207 eligible users (25.6%) in two months</li>
+              <li>Co-wrote an A/B test on the finance product page that raised CTA click rate by 40%</li>
+              <li>Led business-side UAT across 1,000+ test cases in a loan-origination migration</li>
+            </ul></div>
+        </div>
+        <div class="role">
+          <div class="when">2022 – 2023</div>
+          <div><h4>Associate Sales Engineer Analyst</h4><div class="org">Dell Technologies</div>
+            <ul><li>Supported a $9.5M strategic proposal and 8+ enterprise deals with SQL-based customer data analysis</li></ul></div>
+        </div>
+      </div>
+      <h3 class="subhead">Education</h3>
+      <div class="exp">
+        <div class="role">
+          <div class="when">2024 – 2026</div>
+          <div><h4>International Master in Business (MBA)</h4><div class="org">SDA Bocconi Asia Center, Mumbai</div></div>
+        </div>
+        <div class="role">
+          <div class="when">2018 – 2022</div>
+          <div><h4>B.Tech, Electronics &amp; Instrumentation Engineering</h4><div class="org">Amrita School of Engineering, Bengaluru</div></div>
+        </div>
+      </div>
+      <h3 class="subhead">Toolkit</h3>
+      <div class="kit" aria-label="Toolkit" style="margin-top:0">
+        <span>Product discovery</span><span>Root-cause analysis</span><span>User stories</span><span>A/B test design</span><span>UAT</span>
+        <span>SQL</span><span>Python</span><span>Excel</span><span>Power BI</span><span>Figma</span><span>Gemini API</span><span>Jira</span><span>Confluence</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Let's talk</h2>
+        <p>Happy to walk through any of these case studies, including the parts I'd do differently.</p>
+        <div class="mailrow">
+          <span class="mail" id="mail">sreelakshmiprakash62@gmail.com</span>
+          <button type="button" id="copy">Copy email</button>
+          <a class="btn" href="https://www.linkedin.com/in/sreelakshmiprakash13" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Sreelakshmi Prakash · Case studies are independent work using public data and fictional specimens.</div></footer>
+
+<script>
+// Where the Notion case studies are published. Change this one line if your Notion site address is different.
+const NOTION_SITE = "https://north-server-55a.notion.site/";
+document.querySelectorAll("[data-notion]").forEach(a => { a.href = NOTION_SITE + a.dataset.notion; });
+
+const btns = document.querySelectorAll(".filters button");
+btns.forEach(b => b.addEventListener("click", () => {
+  btns.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  const f = b.dataset.f;
+  document.querySelectorAll(".case").forEach(c => { c.hidden = !(f === "all" || c.dataset.tags.split(" ").includes(f)); });
+}));
+
+const copy = document.getElementById("copy");
+copy.addEventListener("click", () => {
+  const text = document.getElementById("mail").textContent;
+  const done = () => { copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy email", 1800); };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(selectIt); else selectIt();
+  function selectIt(){ const r = document.createRange(); r.selectNodeContents(document.getElementById("mail")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+});
+</script>
+</body>
+</html>
