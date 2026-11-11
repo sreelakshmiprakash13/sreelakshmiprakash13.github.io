@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dishwasher fit check · Sreelakshmi Prakash</title>
+<meta name="description" content="Tagging 485 Flipkart reviews showed cleaning expectations, not kitchen fit, drove 37% of unhappy reviews. An optional 60-second fit check for first-time buyers, with a 30-day bad-outcome A/B test.">
+<meta property="og:title" content="Will a dishwasher work for my cooking and my kitchen?">
+<meta property="og:image" content="https://sreelakshmiprakash13.github.io/og.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body class="orange">
+<div class="wrap">
+<nav><a href="../#work">← All work</a><a href="../">Sreelakshmi Prakash</a><a href="../#contact">Contact</a></nav>
+
+<header class="hero">
+  <span class="tab"><span>Discovery</span><span>E-commerce</span></span>
+  <div class="head">
+    <h1>Will a dishwasher work for my cooking and my kitchen?</h1>
+    <p class="answer">Add an optional 60-second fit check to a marketplace's dishwasher page for first-time buyers. It asks about their vessels and their kitchen, then says what will and won't clean well, what to prepare, and which models fit, and passes the answers to the installer.</p>
+    <div class="meta">
+      <div><b>My role</b><span>Solo, self-initiated</span></div>
+      <div><b>Type</b><span>Discovery, reframing, flow design</span></div>
+      <div><b>When</b><span>Aug 2026</span></div>
+      <div><b>Status</b><span>Proposal, prototyped, not user-tested</span></div>
+    </div>
+    <div class="links">
+      <a class="main" href="https://www.figma.com/design/P4HUX6XmuZWohFMv94StlU">Figma prototype</a>
+      <a href="../docs/Dishwasher_Fit_Check_PRD.pdf">One-page PRD (PDF)</a>
+      <a href="https://north-server-55a.notion.site/3da3cf6921f4807cb691d9238bc5749b">Full deck (Notion)</a>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>37%</b><span>of unhappy reviews were about cleaning (25 of 67)</span></div>
+    <div class="kpi"><b>12 of 12</b><span>popular listings were replacement-only, no returns</span></div>
+    <div class="kpi"><b>~2,900</b><span>orders per group for the A/B test</span></div>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">01 · The pivot</span>The evidence changed my question</h2>
+  <p>I started with "will this dishwasher fit my kitchen?". The reviews didn't back that up: only a handful of 485 mention space or setup problems, and installers sort most of them out. What unhappy buyers actually complain about is that it doesn't clean <em>their</em> vessels: tea and milk pans, aluminium, pre-washing, hard-water marks. So I widened the question to "will a dishwasher work for my cooking and my kitchen?" and kept the parts of the first idea that held up.</p>
+  <div class="who">
+    <div class="card"><span class="lbl">Who it's for</span><p>First-time dishwasher buyers on a marketplace, in homes that cook Indian meals daily, often buying for parents.</p></div>
+    <div class="card"><span class="lbl">The problem</span><p>Before buying, they can't tell whether it will work for their vessels and kitchen. They find out after delivery, from the brand's installer, on a listing that allows replacement only.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">02 · Evidence</span>What unhappy buyers hit</h2>
+  <p>I collected 485 recent Flipkart reviews and tagged all 67 rated 1–3 stars, plus 11 positive reviews that mention doubts or setup.</p>
+  <div class="tablewrap"><table>
+    <tr><th>What unhappy buyers hit</th><th>Reviews (of 67)</th></tr>
+    <tr class="pick"><td>Cleaning below expectations: tea and milk stains, pre-wash, hard-water marks, wrong vessels or capacity</td><td class="num">25</td></tr>
+    <tr><td>Installer or service quality</td><td class="num">12</td></tr>
+    <tr><td>Site not ready or installation delayed</td><td class="num">11</td></tr>
+    <tr><td>Defects or breakdowns</td><td class="num">10</td></tr>
+    <tr><td>Too vague to code</td><td class="num">14</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:10px">A review can carry two tags, so the rows add up to 72 across 67 reviews.</p>
+  <ul style="margin-top:12px">
+    <li>All 12 popular listings say "Returns are not permitted. 7 days replacement-only." 6 of 12 leave "Power requirement" blank.</li>
+    <li>Happy buyers write that they bought "with some hesitation", or had heard dishwashers "are not suitable for Indian utensils".</li>
+    <li>One review shows both problems: the installer cancelled because the site wasn't ready, then said the cooker and many vessels couldn't go in.</li>
+  </ul>
+  <div class="callout"><p><b>Root cause:</b> the product page describes the machine. The two things that decide whether it works, the buyer's vessels and water and their site (tap, 16A socket), are only checked by the installer after delivery.</p></div>
+</section>
+
+<section>
+  <h2><span class="n">03 · Options</span>Six options, one chosen</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Option</th><th>Verdict</th></tr>
+    <tr><td>Fill in missing listing data</td><td>Needed, done alongside, but it can't know the buyer's vessels or kitchen</td></tr>
+    <tr><td>Video site survey before delivery</td><td>Later: costly per order and doesn't fix cleaning expectations</td></tr>
+    <tr><td>Longer return or trial window</td><td>Rejected: costly reverse logistics for a large appliance; treats the symptom</td></tr>
+    <tr><td>AI photo of vessels or kitchen</td><td>Later: rules are enough for version 1</td></tr>
+    <tr class="pick"><td>Fit check with prep checklist and installer handoff</td><td>Chosen</td></tr>
+    <tr><td>Do nothing</td><td>Rejected: replacement-only listings keep turning mismatches into 1-star reviews</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2><span class="n">04 · Solution</span>A 60-second fit check</h2>
+  <figure><img src="../img/d_flow.webp" alt="Today's product page and the proposed fit check: your cooking, your kitchen, your result, models that fit" width="1600" height="761" loading="lazy"><figcaption>Today's product page (screen 0) and the proposed fit check (screens 1–5), from the Figma prototype.</figcaption></figure>
+  <ol style="margin-top:18px">
+    <li><b>Optional entry</b> on the product page and in the cart. It never blocks "Buy now".</li>
+    <li><b>Your cooking:</b> household size and the vessels washed daily.</li>
+    <li><b>Your kitchen:</b> water source, tap, 16A socket, floor space. Every question allows "Not sure", which becomes a prep item.</li>
+    <li><b>Result:</b> Good fit, Fit with prep, or Think again, with what will and won't clean well and a prep checklist.</li>
+    <li><b>Models that fit</b> instead of a dead end, with the answers passed to the installer.</li>
+  </ol>
+  <p>Rules only, no AI. The vessel and water rules follow Bosch's own guide: aluminium, cast iron, non-stick, copper and wood shouldn't go in, and above 370 ppm water hardness salt and rinse aid are needed.</p>
+  <div class="callout"><p><b>Trade-off:</b> an honest "your aluminium kadai won't go in" will lose some sales. When returns aren't allowed, a lost sale costs less than a stuck buyer and a 1-star review. A conversion guardrail keeps that loss in check.</p></div>
+</section>
+
+<section>
+  <h2><span class="n">05 · Metrics</span>How I'd know it works</h2>
+  <div class="who">
+    <div class="card"><span class="lbl">A/B test</span><p>First-time shoppers, split 50/50 on the product page. <b>Primary metric:</b> 30-day bad-outcome rate per order (site-not-ready cancellation, replacement, expectation complaint, or a 1–2 star review). <b>Guardrails:</b> product page to order conversion with a stop threshold, and fit-check abandonment.</p></div>
+    <div class="card"><span class="lbl">Sample size</span><p>About 2,900 orders per group to detect a fall from an assumed 8% to 6%, at 5% significance and 85% power. Base case: about 200 fewer bad outcomes per 10,000 orders.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">06 · Limits</span>What this does and doesn't show</h2>
+  <ul>
+    <li>Reviews only come from people who bought. Shoppers who never bought because of doubt aren't counted.</li>
+    <li>The tags come from a single pass by one reader, and the 8% bad-outcome rate is an assumption only the marketplace can replace.</li>
+    <li>The installation process isn't public, so "brand installs after delivery" is inferred from reviews and the listing.</li>
+  </ul>
+  <div class="dark"><span class="lbl">What I'd do differently</span>
+    <ul>
+      <li>Add Amazon reviews, so the finding isn't one platform's.</li>
+      <li>Have a second person tag a sample of reviews.</li>
+      <li>Time the 60 seconds with real shoppers and talk to a few installers.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="next">
+  <a href="kyc-teardown.html"><span class="mono">Previous project</span><b>Why borrowers who changed their number can't finish KYC</b></a>
+  <a href="../#work"><span class="mono">Back</span><b>All work</b></a>
+</div>
+<footer>© Sreelakshmi Prakash</footer>
+</div>
+</body>
+</html>
