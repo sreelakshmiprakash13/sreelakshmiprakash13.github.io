@@ -50,7 +50,7 @@
 <section>
   <h2><span class="n">02 · Method</span>A test set built so the hard cases are known</h2>
   <p>12 fictional people and 24 specimen documents (12 PAN, 12 Aadhaar), each saved as a digital PDF, a simulated scan and a simulated phone photo: 72 uploads with a ground-truth answer key and no real data. I built in the hard cases on purpose: names with initials, look-alike characters (O and 0, I and 1, S and 5, B and 8), and dates where the day and month are both 12 or less.</p>
-  <p>One structured-output prompt, locked before the run. Every field scored by exact match. A document counts as correct only if every decision field is right.</p>
+  <p>Model: Gemini 3.5 Flash-Lite, the low-cost tier a lender would run at volume. One structured-output prompt, locked before the run, and each file sent once (run on 29 Oct 2026). Every field scored by exact match. A document counts as correct only if every decision field is right.</p>
   <figure><img src="../img/e_examples.webp" alt="One specimen Aadhaar card as a digital PDF, a simulated scan and a simulated phone photo" width="1400" height="367" loading="lazy"><figcaption>One specimen card three ways: digital PDF, simulated scan, simulated phone photo.</figcaption></figure>
 </section>
 
@@ -63,7 +63,7 @@
     <tr><td>Phone photo</td><td class="num">98% (118/120)</td><td class="num">96% (23/24), 80–99%</td><td class="num">₹0.12</td></tr>
   </table></div>
   <p class="note" style="margin-top:10px">All 4 errors were look-alike characters: the letter O at the end of a PAN read as zero three times (2 scans, 1 photo), and B read as 8 in one address. The address is not a decision field.</p>
-  <div class="callout"><p><b>The insight:</b> average confidence was 1.00 on the wrong values and 0.995 on the correct ones. Confidence couldn't separate good reads from bad ones, so it can't be the gate on its own.</p></div>
+  <div class="callout"><p><b>The insight:</b> every one of the 4 wrong values came back with confidence 1.0, while correct values averaged 0.995. Confidence couldn't separate good reads from bad ones, so it can't be the gate on its own.</p></div>
 </section>
 
 <section>
@@ -74,6 +74,7 @@
     <tr class="pick"><td>B. Format checks + confidence (chosen)</td><td class="num">96% (69/72)</td><td class="num">0</td></tr>
   </table></div>
   <p style="margin-top:14px">Rule A let all 3 errors through at every threshold up to 0.99. Rule B caught them because a PAN must end in a letter. The 3 documents it sent to a person were exactly the 3 misread PANs.</p>
+  <div class="card"><span class="lbl">Why 0.95</span><p style="margin:0">The model rated almost every field 0.99 or 1.0, so with format checks on, every threshold from 0.50 to 0.95 gave the same result: 69 of 72 auto-accepted, zero wrong. At 0.97 auto-accept fell to 68 of 72 with no extra safety. I picked 0.95, the strictest setting that cost nothing, to keep a margin in case a future model or harder documents bring confidence down. The notebook's own pick was 0.50, because it breaks ties with the lowest value.</p></div>
   <div class="callout"><p><b>Trade-off:</b> Rule B sends 3 more uploads to a person (4% more manual review) to stop 3 wrong PANs. Format checks are free to run, and a wrong auto-accept costs far more than a review.</p></div>
 </section>
 
@@ -91,7 +92,7 @@
   <ul>
     <li>Zero errors in 69 auto-accepts still allows a true error rate up to about 4%. Showing it is below 1% needs about 300 checked uploads.</li>
     <li>I designed Rule B after seeing these same 72 uploads, and they are 24 documents in three formats from 12 people, not 72 independent samples.</li>
-    <li>Scans and photos are simulated, and specimen cards are cleaner than real, worn cards.</li>
+    <li>Scans and photos are simulated, specimen cards are cleaner than real, worn cards, and each file was run once.</li>
     <li>Cost is at Google's list price (checked Oct 2026); the run itself used the free tier.</li>
   </ul>
   <div class="dark"><span class="lbl">What I'd do differently</span>
