@@ -166,17 +166,14 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 .jobs{display:grid;gap:10px}
 .job{--c:var(--indigo);--cs:var(--indigo-soft);background:var(--paper);border-radius:18px;border-left:4px solid var(--c);transition:box-shadow .25s,transform .25s}
 .job.teal{--c:var(--teal);--cs:var(--teal-soft)}
-.job summary{list-style:none;display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;border-radius:18px}
+.job summary{list-style:none;display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;border-radius:18px}
 .job summary::-webkit-details-marker{display:none}
-.badge{flex:none;width:46px;height:46px;border-radius:14px;background:var(--cs);color:var(--c);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.02em;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .25s,color .25s}
 .jt{flex:1;min-width:0}
 .jt b{display:block;line-height:1.3}.jt span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
 .chev{flex:none;width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translateY(-3px);transition:transform .25s}
 .job[open] .chev{transform:rotate(225deg) translate(-3px,0)}
-.job[open] .badge,.job summary:hover .badge{background:var(--c);color:var(--on-accent)}
-.job p{margin:0;padding:0 18px 16px 76px;max-width:none;color:var(--ink);font-size:15px}
-@media (prefers-reduced-motion:no-preference){.job:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--shadow)}.job summary:hover .badge{transform:rotate(-6deg) scale(1.06)}.job[open] p{animation:rise .3s cubic-bezier(.2,.8,.2,1)}}
-@media (max-width:640px){.job p{padding-left:18px}}
+.job p{margin:0;padding:0 18px 16px 18px;max-width:none;color:var(--ink);font-size:15px}
+@media (prefers-reduced-motion:no-preference){.job:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--shadow)}.job[open] p{animation:rise .3s cubic-bezier(.2,.8,.2,1)}}
 .edu{display:grid;gap:10px}
 .edu div{border-top:1px solid var(--line);padding-top:10px}
 .edu b{display:block}.edu span{color:var(--muted);font-size:14px}
@@ -376,11 +373,11 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
       <span class="mono cvl">Experience</span>
       <div class="jobs">
         <details class="job" open>
-          <summary><span class="badge" aria-hidden="true">MB</span><span class="jt"><b>Business Analyst - Product &amp; Projects, Retail Finance</b><span>Mercedes-Benz India · 2026 to now</span></span><span class="chev" aria-hidden="true"></span></summary>
+          <summary><span class="jt"><b>Business Analyst - Product &amp; Projects, Retail Finance</b><span>Mercedes-Benz India · 2026 to now</span></span><span class="chev" aria-hidden="true"></span></summary>
           <p>I work on a new loan origination system for car finance: research with dealer sales teams, specs and user stories, business-side UAT, and the KYC capture step.</p>
         </details>
         <details class="job teal">
-          <summary><span class="badge" aria-hidden="true">D</span><span class="jt"><b>Associate Sales Engineer Analyst</b><span>Dell Technologies · 2022 to 2023</span></span><span class="chev" aria-hidden="true"></span></summary>
+          <summary><span class="jt"><b>Associate Sales Engineer Analyst</b><span>Dell Technologies · 2022 to 2023</span></span><span class="chev" aria-hidden="true"></span></summary>
           <p>I presented technical solutions to enterprise customers and built the competitive analysis behind large proposals.</p>
         </details>
       </div>
