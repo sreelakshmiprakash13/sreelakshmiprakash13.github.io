@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The KYC dead end · Sreelakshmi Prakash</title>
+<meta name="description" content="A KYC teardown of Navi, KreditBee and Money View: borrowers whose PAN is tied to an old mobile number hit a dead end. A self-serve account move with a live selfie and a reverse ₹1 UPI check, with an A/B test plan.">
+<meta property="og:title" content="Why borrowers who changed their phone number can't finish KYC">
+<meta property="og:image" content="https://sreelakshmiprakash13.github.io/og.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body class="teal">
+<div class="wrap">
+<nav><a href="../#work">← All work</a><a href="../">Sreelakshmi Prakash</a><a href="../#contact">Contact</a></nav>
+
+<header class="hero">
+  <span class="tab"><span>Teardown</span><span>Fintech onboarding</span></span>
+  <div class="head">
+    <h1>Why borrowers who changed their phone number can't finish KYC</h1>
+    <p class="answer">Let a borrower whose PAN is tied to an old mobile number move the account to their new number inside the app, after a live selfie and a reverse ₹1 UPI check. Version 1 covers borrowers with no active loan.</p>
+    <div class="meta">
+      <div><b>My role</b><span>Solo, self-initiated</span></div>
+      <div><b>Type</b><span>Teardown, flow design, A/B plan</span></div>
+      <div><b>When</b><span>Sep 2026</span></div>
+      <div><b>Status</b><span>Proposal, prototyped, not user-tested</span></div>
+    </div>
+    <div class="links">
+      <a class="main" href="https://www.figma.com/design/jKBAlixuclvfFe1NVdcEnW">Figma prototype</a>
+      <a href="../docs/KYC_Account_Move_PRD.pdf">One-page PRD (PDF)</a>
+      <a href="https://north-server-55a.notion.site/4093cf6921f481a684ecf3e61546819b">Full deck (Notion)</a>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>6 of 40</b><span>KYC reviews describe the lock, and all 6 were blocked</span></div>
+    <div class="kpi"><b>3 apps</b><span>Navi, KreditBee and Money View, walked through on an iPhone</span></div>
+    <div class="kpi"><b>~200</b><span>locked users per group for the A/B test</span></div>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">01 · Problem</span>A dead end with no way out</h2>
+  <p>Borrowers who changed their mobile number, or use two SIMs, try to sign up on the new number and are told their PAN is already in use. The PAN stays tied to an older account and number, and there is no self-serve way to re-link it. KreditBee's own FAQ confirms the only routes: log in with the old number, or email support. CKYC and Aadhaar OTPs go to the number on file, so the official records don't help either.</p>
+  <div class="who">
+    <div class="card"><span class="lbl">Who it's for</span><p>Returning borrowers with no active loan whose PAN is tied to an older account and a number they no longer have, or a second SIM.</p></div>
+    <div class="card"><span class="lbl">Why now</span><p>RBI's January 2025 circular asks lenders to clean data against the list of disconnected numbers and update a mobile number "after due verification". Press reports in December 2025 say telecom authorities asked apps to act on flagged numbers, so more accounts may lock.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">02 · Evidence</span>40 reviews about the KYC step</h2>
+  <p>I pulled 567 Play Store reviews that mention KYC (Sep–Oct 2026), read and tagged 102 of them, and found 40 about the KYC step itself. Every count below is out of those 40.</p>
+  <div class="tablewrap"><table>
+    <tr><th>What reviewers hit at KYC</th><th>Reviews (of 40)</th><th>Blocked</th></tr>
+    <tr class="pick"><td>Identity or data mismatch, including the PAN lock</td><td class="num">13</td><td class="num">12</td></tr>
+    <tr><td>Permissions or trust</td><td class="num">10</td><td class="num">3</td></tr>
+    <tr><td>Waiting with no status</td><td class="num">8</td><td class="num">1</td></tr>
+    <tr><td>Camera, documents or retries</td><td class="num">7</td><td class="num">6</td></tr>
+    <tr><td>Video KYC</td><td class="num">5</td><td class="num">3</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:10px">A review can carry two codes, so the rows add up to 43 across the 40 reviews.</p>
+  <div class="callout"><p><b>Why this one:</b> 6 of the 40 describe a PAN locked to an old or second number, on all three apps, and every one of them was fully blocked. It is a dead end with a clear owner and a clear fix.</p></div>
+  <figure><img src="../img/k_walk.webp" alt="Screens from the walkthrough of Navi, KreditBee and Money View, with personal data blocked out" width="1600" height="617" loading="lazy"><figcaption>What the walkthrough showed (personal data blocked out). Money View rejected me before KYC, so its KYC steps are out of scope.</figcaption></figure>
+</section>
+
+<section>
+  <h2><span class="n">03 · Options</span>Six options, one chosen</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Option</th><th>Verdict</th></tr>
+    <tr><td>Log in with the old number</td><td>Kept as path A, only when the old number is still active</td></tr>
+    <tr><td>Support ticket</td><td>Rejected: what borrowers get today, and reviews show it fails</td></tr>
+    <tr class="pick"><td>Move the account in the app</td><td>Chosen, together with path A</td></tr>
+    <tr><td>Allow a second account on the new number</td><td>Rejected: duplicate PAN accounts break fraud and bureau checks</td></tr>
+    <tr><td>Aadhaar face authentication</td><td>Later: a lender needs UIDAI authentication approval</td></tr>
+    <tr><td>Do nothing</td><td>Rejected: blocked borrowers leave, and the number clean-up will lock more accounts</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2><span class="n">04 · Solution</span>Move the account, safely</h2>
+  <figure><img src="../img/k_flow.webp" alt="Today's dead end and the proposed five-step flow: lock detected, choose a path, live selfie, pay ₹1 by UPI, account moved" width="1600" height="761" loading="lazy"><figcaption>Today's dead end (screen 0) and the proposed flow (screens 1–5), from the Figma prototype.</figcaption></figure>
+  <ol style="margin-top:18px">
+    <li><b>Lock detected early:</b> show the masked old number (••12) and offer two paths. "Log in with ••12" appears only if that number isn't on the disconnected list.</li>
+    <li><b>Live selfie</b> matched to the photo on the KYC record, with liveness tested to ISO/IEC 30107-3 and a check for injected video.</li>
+    <li><b>Reverse ₹1 UPI check:</b> the borrower pays ₹1 from their own UPI app; the payer name must match the PAN; the ₹1 is refunded.</li>
+    <li><b>Account moved:</b> alerts to the email on file and the old device, a 24-hour hold on new loans, and a one-tap "this wasn't me".</li>
+  </ol>
+  <p><b>Why these checks:</b> nothing goes to the old number, because operators give a disconnected number to someone new after 90 days. Paying ₹1 needs the borrower's phone and UPI PIN, while receiving ₹1 only proves an account exists. A selfie works for two-SIM users, where Aadhaar OTP fails.</p>
+  <div class="callout"><p><b>Trade-off:</b> every self-serve recovery path is also an account-takeover path. The 24-hour hold, the alerts and version 1's no-active-loan rule limit the damage while the guardrails are proven.</p></div>
+</section>
+
+<section>
+  <h2><span class="n">05 · Metrics</span>How I'd know it works</h2>
+  <div class="who">
+    <div class="card"><span class="lbl">A/B test</span><p>Locked users only, split 50/50 when the lock is detected. <b>Primary metric:</b> KYC completed within 7 days. <b>Guardrails:</b> disputed recoveries or fraud flags within 30 days, KYC pass rate, approval rate, with a fraud stop rule.</p></div>
+    <div class="card"><span class="lbl">Sample size</span><p>About 200 locked users per group to detect a lift from an assumed 10% to 20%, at 5% significance and 80% power. At a 1% lock rate that is about 40,000 KYC starts, so it needs a lender with real volume.</p></div>
+  </div>
+  <p style="margin-top:16px">I wrote the event plan (lock detected → choice → selfie → bank check → account moved → KYC completed) and three SQL queries for the readout: completion by group, drop-off by step, and the fraud guardrail. Base case: about 30 extra loans and ₹5.6 lakh disbursed per 100,000 KYC starts; every input except the ₹18,802 average ticket is an assumption.</p>
+</section>
+
+<section>
+  <h2><span class="n">06 · Consent check</span>RBI and DPDP readiness</h2>
+  <div class="tablewrap wide"><table>
+    <tr><th>Check</th><th>Navi</th><th>KreditBee</th><th>Money View</th></tr>
+    <tr><td>Consent separate from terms</td><td>Bundled</td><td>Bundled</td><td>Separate, but all required</td></tr>
+    <tr><td>Pre-ticked boxes</td><td>5-year monitoring consent</td><td>5 boxes</td><td>None</td></tr>
+    <tr><td>Withdraw consent or delete data</td><td>Only through chat, about 7 taps</td><td>Only through support</td><td>Only by email</td></tr>
+  </table></div>
+  <p class="note" style="margin-top:10px">Giving consent takes one tap in all three apps; taking it back does not. DPDP requires withdrawal to be as easy as giving consent from 13 May 2027, so these are readiness gaps, not breaches.</p>
+</section>
+
+<section>
+  <h2><span class="n">07 · Limits</span>What this does and doesn't show</h2>
+  <ul>
+    <li>Reviews prove the dead end exists, not how common it is. Only the lender can see how many KYC starts hit "PAN already in use".</li>
+    <li>Reviews are self-selected, and keyword matching misses reviews in Hindi script.</li>
+    <li>The walkthrough used one iPhone and stopped before accepting any offer; screen 0 is rebuilt from reviews.</li>
+  </ul>
+  <div class="dark"><span class="lbl">What I'd do differently</span>
+    <ul>
+      <li>Talk to people who changed their number, not only read their reviews.</li>
+      <li>Have a second person tag a sample, so the counts don't rest on one reader.</li>
+      <li>Get a lender's real lock rate and selfie-match accuracy before sizing the test.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="next">
+  <a href="ai-kyc-eval.html"><span class="mono">Previous project</span><b>When should a lender trust AI to read KYC documents?</b></a>
+  <a href="dishwasher-fit-check.html"><span class="mono">Next project</span><b>Will a dishwasher work for my cooking and my kitchen?</b></a>
+</div>
+<footer>© Sreelakshmi Prakash</footer>
+</div>
+</body>
+</html>
