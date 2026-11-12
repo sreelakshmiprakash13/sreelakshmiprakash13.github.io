@@ -151,9 +151,29 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 @media (prefers-reduced-motion:no-preference){.pile img{transition:transform .25s}.pile img:hover{transform:rotate(0) translateY(-14px) scale(1.06);z-index:3}}
 
 /* HOW */
-.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:26px}
-.flow span{background:var(--paper);border-radius:999px;padding:12px 20px;font-weight:600}
-.flow i{font-style:normal;color:var(--muted)}
+.steps{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}
+.steps::before{content:"";position:absolute;left:6%;right:6%;top:46px;border-top:2px dashed var(--line);z-index:0}
+.step{position:relative;z-index:1;background:var(--paper);border-radius:22px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ico{width:52px;height:52px;border-radius:16px;background:var(--accent-soft);display:grid;place-items:center}
+.ico svg{width:30px;height:30px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ico .a4{fill:var(--accent)}
+.num{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);margin-top:6px}
+.step h3{font-family:var(--display);font-weight:800;font-size:clamp(19px,1.8vw,22px);line-height:1.15;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.step p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+.eg{appearance:none;margin-top:auto;cursor:pointer;text-align:left;font:600 13px/1.35 var(--body);color:var(--ink);background:var(--bg);border:0;border-radius:12px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start}
+.eg i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--p);margin-top:4px}
+.eg:hover{outline:2px solid var(--p)}
+@media (prefers-reduced-motion:no-preference){
+  .step{transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  .step:hover{transform:translateY(-4px);box-shadow:0 14px 28px var(--shadow)}
+  .ico g,.ico path,.ico circle{transition:transform .45s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:center}
+  .step:hover .a1{transform:rotate(-6deg) scale(1.05)}
+  .step:hover .a2{transform:translate(2px,-2px) rotate(-12deg)}
+  .step:hover .a3{transform:rotate(-12deg)}
+  .step:hover .a4{transform:scale(2.2)}
+}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.steps::before{display:none}}
+@media (max-width:560px){.steps{grid-template-columns:minmax(0,1fr)}.step{display:grid;grid-template-columns:52px minmax(0,1fr);column-gap:14px;row-gap:6px}.step>*:not(.ico){grid-column:2}.ico{grid-row:1/span 4}.num{margin-top:0}}
 
 /* ABOUT */
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;margin-top:26px}
@@ -190,6 +210,18 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 .btn{appearance:none;cursor:pointer;border:2px solid var(--ink);background:transparent;color:var(--ink);font:600 15px var(--body);padding:10px 18px;border-radius:999px;text-decoration:none}
 .btn.fill{background:var(--ink);color:var(--bg)}
 .btn[aria-disabled="true"]{opacity:.5;cursor:default}
+/* Button feedback: lift on hover, press on tap */
+.cta,.links a,.btn{transition:transform .18s ease,box-shadow .18s ease,background-color .18s,color .18s}
+.links a:not(.main):hover,.btn:not(.fill):hover{background:var(--ink);color:var(--bg)}
+.cta:hover,.links a.main:hover,.btn.fill:hover{box-shadow:0 8px 18px var(--shadow)}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .cta:hover,.links a:hover,.btn:hover{transform:translateY(-2px)}
+  .cta:active,.links a:active,.btn:active,.eg:active,.fold:active .icon{transform:scale(.97)}
+  .signame{animation:write 1.6s cubic-bezier(.5,.1,.3,1) .25s both}
+  @keyframes write{from{clip-path:inset(-20% 100% -40% 0)}to{clip-path:inset(-20% -5% -40% 0)}}
+}
+section,#about{scroll-margin-top:16px}
 @media (max-width:760px){.touch{grid-template-columns:minmax(0,1fr)}}
 footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
@@ -229,8 +261,8 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
     <div class="aboutme">
       <h2>About me</h2>
       <span class="hi">Hi there, I'm Sree!</span>
-      <p class="lead">I find the real problem behind user complaints, decide what to build, and design the test that proves it.</p>
-      <p>I'm a Business Analyst on product and projects for lending journeys at Mercedes-Benz, Retail Finance, with an MBA from SDA Bocconi Asia Center. On my own time I take a real complaint, find out why it happens, and write down what I'd build and how I'd know it worked.</p>
+      <p class="lead">Engineering taught me how things are built. Dell taught me how to sell them. Now I'm learning what to build, and why.</p>
+      <p>Today I'm a Business Analyst on product and projects at Mercedes-Benz, Retail Finance, working on how customers get a car loan. I got here after an MBA at SDA Bocconi Asia Center. Outside work, I pick a problem people keep complaining about, read what they actually wrote, and work out what I'd build and how I'd know it worked.</p>
       <div class="actions"><a class="cta" href="#work">See my work <span aria-hidden="true">↓</span></a></div>
     </div>
   </div>
@@ -357,7 +389,37 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
 
 <section id="how">
   <h2>How I <em>work</em></h2>
-  <div class="flow" aria-label="My process"><span>Start from evidence</span><i>→</i><span>Find the root cause</span><i>→</i><span>Decide with trade-offs</span><i>→</i><span>Define the test</span></div>
+  <p class="sub">The same four habits run through every folder above. Tap an example to open it.</p>
+  <ol class="steps">
+    <li class="step">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path class="a1" d="M5 7.5A2.5 2.5 0 0 1 7.5 5h17A2.5 2.5 0 0 1 27 7.5v11a2.5 2.5 0 0 1-2.5 2.5H13l-6 5v-5h0.5A2.5 2.5 0 0 1 5 18.5z"/><path d="M10 11h12M10 15h8"/></svg></span>
+      <span class="num">01</span>
+      <h3>Read the complaints first</h3>
+      <p>Before I have an idea, I read what people actually wrote: reviews, app-store comments, help pages.</p>
+      <button class="eg" type="button" data-open="p3" style="--p:var(--orange)"><i></i>485 Flipkart reviews: only 4 of 67 unhappy ones were about the tap, socket or pipe</button>
+    </li>
+    <li class="step">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><g class="a2"><circle cx="14" cy="14" r="7.5"/><path d="M19.5 19.5 26 26"/></g><path d="M11 14h6"/></svg></span>
+      <span class="num">02</span>
+      <h3>Keep asking why</h3>
+      <p>The first answer is usually a symptom. I keep going until I can name what's actually stuck.</p>
+      <button class="eg" type="button" data-open="p2" style="--p:var(--teal)"><i></i>Locked out of KYC: the PAN stays tied to an old phone number</button>
+    </li>
+    <li class="step">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 5v22M10 27h12"/><g class="a3"><path d="M6 10h20"/><path d="M6 10 3 17h6zM26 10l-3 7h6z"/></g></svg></span>
+      <span class="num">03</span>
+      <h3>Choose, and say what it costs</h3>
+      <p>Every option gives something up. I pick one and write down exactly what we lose.</p>
+      <button class="eg" type="button" data-open="p1" style="--p:var(--indigo)"><i></i>AI KYC: 3 of 72 uploads go to a person, so no wrong PAN slips through</button>
+    </li>
+    <li class="step">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="6"/><circle class="a4" cx="16" cy="16" r="1.8"/></svg></span>
+      <span class="num">04</span>
+      <h3>Decide how I'd know</h3>
+      <p>Before anything is built, I set the number that would prove me wrong.</p>
+      <button class="eg" type="button" data-open="p3" style="--p:var(--orange)"><i></i>Dishwasher: a 30-day A/B test, ~2,900 orders per group</button>
+    </li>
+  </ol>
 </section>
 
 <section id="skills">
@@ -414,6 +476,12 @@ folds.forEach(function(f){
       var on=g===f; g.setAttribute('aria-pressed',String(on));
       document.getElementById(g.dataset.board).hidden=!on;
     });
+  });
+});
+document.querySelectorAll('.eg').forEach(function(b){
+  b.addEventListener('click',function(){
+    var f=document.querySelector('.fold[data-board="'+b.dataset.open+'"]');
+    if(f){f.click();document.getElementById('work').scrollIntoView({block:'start'});}
   });
 });
 document.getElementById('copy').addEventListener('click',function(){

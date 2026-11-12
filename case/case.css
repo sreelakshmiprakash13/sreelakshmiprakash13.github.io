@@ -100,5 +100,14 @@ figcaption{font-size:14px;color:var(--muted);margin-top:10px;padding:0 4px}
 .next a{display:block;text-decoration:none;background:var(--paper);border-radius:18px;padding:18px 20px}
 .next a b{display:block;font-family:var(--display);font-size:20px;line-height:1.2;margin-top:4px}
 .next a:hover{outline:2px solid var(--c)}
+/* Button feedback */
+.links a,.next a{transition:transform .18s ease,box-shadow .18s ease,background-color .18s,color .18s}
+.links a:not(.main):hover{background:var(--ink);color:var(--bg)}
+.links a.main:hover,.next a:hover{box-shadow:0 8px 18px var(--shadow)}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .links a:hover,.next a:hover{transform:translateY(-2px)}
+  .links a:active,.next a:active{transform:scale(.97)}
+}
 @media (max-width:640px){.next{grid-template-columns:minmax(0,1fr)}}
 footer{padding-top:28px;color:var(--muted);font-size:13px}
