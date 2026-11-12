@@ -1,28 +1,32 @@
 /* Case-study pages. Same tokens and type as the home page; one project colour per page via --c / --cs. */
 :root{
-  --bg:#EEEFF2; --paper:#FFFFFF; --ink:#111216; --muted:#5D626B; --line:#D6D8DE;
-  --indigo:#4B45E0; --teal:#0C8F7E; --orange:#E8590C;
-  --indigo-soft:#E4E3FB; --teal-soft:#D6F0EA; --orange-soft:#FCE3D3;
-  --on-accent:#FFFFFF; --tape:#EBD26A; --shadow:rgba(17,18,22,.14);
+  --bg:#F1EBE1; --paper:#FBF8F2; --ink:#2A1F1A; --muted:#6B5E54; --line:#DDD3C4;
+  --accent:#2F5BEA; --accent-soft:#E4E9F8; --on-accent:#FFFFFF;
+  --indigo:#5C5F9E; --teal:#467366; --orange:#A9573A; --on-proj:#FBF8F2;
+  --indigo-soft:#E4E9F8; --teal-soft:#E4E9F8; --orange-soft:#E4E9F8;
+  --tape:#D9C7A8; --shadow:rgba(42,31,26,.16);
   --display:'Bricolage Grotesque',system-ui,sans-serif;
   --sig:'Allura','Brush Script MT',cursive;
   --serif:'Instrument Serif',Georgia,serif;
   --body:'Instrument Sans',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
-  --c:var(--indigo); --cs:var(--indigo-soft);
+  --c:var(--accent); --cs:var(--accent-soft); --p:var(--indigo);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0F1013; --paper:#1A1B21; --ink:#F1F1F3; --muted:#A2A6AF; --line:#2C2E36;
-  --indigo:#8C87FF; --teal:#3ECDB8; --orange:#FF8B4D;
-  --indigo-soft:#25244B; --teal-soft:#123430; --orange-soft:#3B2517;
-  --on-accent:#0F1013; --tape:#BFA544; --shadow:rgba(0,0,0,.5); color-scheme:dark}}
+  --bg:#1A1512; --paper:#231C18; --ink:#F1EBE1; --muted:#B3A69B; --line:#3A302A;
+  --accent:#8EA8FF; --accent-soft:#232B45; --on-accent:#1A1512;
+  --indigo:#9A9DDB; --teal:#7FB3A4; --orange:#E0916F; --on-proj:#1A1512;
+  --indigo-soft:#232B45; --teal-soft:#232B45; --orange-soft:#232B45;
+  --tape:#5A4A36; --shadow:rgba(0,0,0,.5); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F1013; --paper:#1A1B21; --ink:#F1F1F3; --muted:#A2A6AF; --line:#2C2E36;
-  --indigo:#8C87FF; --teal:#3ECDB8; --orange:#FF8B4D;
-  --indigo-soft:#25244B; --teal-soft:#123430; --orange-soft:#3B2517;
-  --on-accent:#0F1013; --tape:#BFA544; --shadow:rgba(0,0,0,.5); color-scheme:dark}
-body.teal{--c:var(--teal);--cs:var(--teal-soft)}
-body.orange{--c:var(--orange);--cs:var(--orange-soft)}
+  --bg:#1A1512; --paper:#231C18; --ink:#F1EBE1; --muted:#B3A69B; --line:#3A302A;
+  --accent:#8EA8FF; --accent-soft:#232B45; --on-accent:#1A1512;
+  --indigo:#9A9DDB; --teal:#7FB3A4; --orange:#E0916F; --on-proj:#1A1512;
+  --indigo-soft:#232B45; --teal-soft:#232B45; --orange-soft:#232B45;
+  --tape:#5A4A36; --shadow:rgba(0,0,0,.5); color-scheme:dark}
+/* Two neutrals carry the page; cobalt is the one accent. The project's muted colour marks only its tab and header edge. */
+body.teal{--p:var(--teal)}
+body.orange{--p:var(--orange)}
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
@@ -39,8 +43,8 @@ nav a{text-decoration:none}
 nav a:hover{text-decoration:underline;text-underline-offset:4px}
 
 .hero{padding:22px 0 8px}
-.tab{display:inline-flex;gap:10px;background:var(--c);color:var(--on-accent);padding:7px 16px;border-radius:12px 12px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-.head{background:var(--paper);border-radius:4px 24px 24px 24px;padding:clamp(22px,4vw,44px);border-top:5px solid var(--c)}
+.tab{display:inline-flex;gap:10px;background:var(--p);color:var(--on-proj);padding:7px 16px;border-radius:12px 12px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.head{background:var(--paper);border-radius:4px 24px 24px 24px;padding:clamp(22px,4vw,44px);border-top:5px solid var(--p)}
 .head h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.035em;margin:0 0 16px;text-wrap:balance}
 .answer{font-size:clamp(18px,2vw,21px);line-height:1.45;margin:0 0 22px;max-width:40em}
 .meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;border-top:1px solid var(--line);padding-top:18px}
