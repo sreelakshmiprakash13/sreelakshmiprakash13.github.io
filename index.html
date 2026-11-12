@@ -221,7 +221,7 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
   /* Signature writes itself: hidden until the script font has loaded, then revealed at a handwriting pace */
   .sigw{display:inline-block;line-height:1;vertical-align:top}
   .js .sigw{clip-path:inset(-30% 100% -50% -5%)}
-  .js.write .sigw{animation:write 2.8s cubic-bezier(.3,.15,.5,1) .4s both}
+  .js.write .sigw{animation:write 4.2s cubic-bezier(.4,.12,.6,.92) .6s both}
   @keyframes write{from{clip-path:inset(-30% 100% -50% -5%)}to{clip-path:inset(-30% -5% -50% -5%)}}
 }
 section,#about{scroll-margin-top:16px}
