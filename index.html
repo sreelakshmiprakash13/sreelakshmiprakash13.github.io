@@ -179,17 +179,28 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 .jobs{display:grid;gap:10px}
 .job{--c:var(--indigo);--cs:var(--indigo-soft);background:var(--paper);border-radius:18px;border-left:4px solid var(--c);transition:box-shadow .25s,transform .25s}
 .job.teal{--c:var(--teal);--cs:var(--teal-soft)}
-.job summary{list-style:none;display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;border-radius:18px}
+.job summary{list-style:none;display:flex;align-items:center;gap:12px;padding:18px 18px 16px;cursor:pointer;border-radius:18px}
 .job summary::-webkit-details-marker{display:none}
 .jt{flex:1;min-width:0}
-.jt b{display:block;line-height:1.3}.jt span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.jt .co{display:block;font-family:var(--display);font-weight:800;font-size:clamp(22px,2.3vw,28px);line-height:1.05;letter-spacing:-.03em;color:var(--ink)}
+.jt b{display:block;font-weight:500;font-size:15px;line-height:1.35;color:var(--muted);margin-top:5px}
+.yr{flex:none;align-self:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--bg);border-radius:999px;padding:5px 10px;color:var(--muted)}
 .chev{flex:none;width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translateY(-3px);transition:transform .25s}
 .job[open] .chev{transform:rotate(225deg) translate(-3px,0)}
 .job p{margin:0;padding:0 18px 16px 18px;max-width:none;color:var(--ink);font-size:15px}
 @media (prefers-reduced-motion:no-preference){.job:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--shadow)}.job[open] p{animation:rise .3s cubic-bezier(.2,.8,.2,1)}}
-.edu{display:grid;gap:10px}
-.edu div{border-top:1px solid var(--line);padding-top:10px}
-.edu b{display:block}.edu span{color:var(--muted);font-size:14px}
+.edu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dip{position:relative;background:var(--paper);border-radius:20px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:3px;min-width:0;overflow:hidden;border:1.5px solid var(--line)}
+.dip::after{content:"";position:absolute;inset:6px;border:1px dashed var(--line);border-radius:15px;pointer-events:none}
+.seal{width:44px;height:44px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;margin-bottom:10px}
+.seal svg{width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.yr2{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.deg{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.1;letter-spacing:-.02em}
+.full{font-size:14px;line-height:1.35;color:var(--ink);margin-top:4px}
+.sch{font-weight:600;font-size:15px;line-height:1.3;margin-top:10px}
+.dip .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.dip{transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}.dip:hover{transform:translateY(-3px);box-shadow:0 12px 24px var(--shadow)}.dip:hover .seal svg{transform:rotate(-10deg);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}}
+@media (max-width:560px){.edu{grid-template-columns:minmax(0,1fr)}}
 .tb{min-width:0}
 .trow{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
 .trow:first-of-type{border-top:0;padding-top:4px}
@@ -221,7 +232,7 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
   /* Signature writes itself: hidden until the script font has loaded, then revealed at a handwriting pace */
   .sigw{display:inline-block;line-height:1;vertical-align:top}
   .js .sigw{clip-path:inset(-30% 100% -50% -5%)}
-  .js.write .sigw{animation:write 4.2s cubic-bezier(.4,.12,.6,.92) .6s both}
+  .js.write .sigw{animation:write 3.3s cubic-bezier(.4,.12,.6,.92) .5s both}
   @keyframes write{from{clip-path:inset(-30% 100% -50% -5%)}to{clip-path:inset(-30% -5% -50% -5%)}}
 }
 section,#about{scroll-margin-top:16px}
@@ -410,18 +421,18 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
       <span class="mono cvl"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/><path d="M3 12.5h18"/><path d="M11 12.5v2h2v-2"/></svg>Experience</span>
       <div class="jobs">
         <details class="job" open>
-          <summary><span class="jt"><b>Business Analyst - Product &amp; Projects, Retail Finance</b><span>Mercedes-Benz India · 2026 to now</span></span><span class="chev" aria-hidden="true"></span></summary>
+          <summary><span class="jt"><span class="co">Mercedes-Benz India</span><b>Business Analyst - Product &amp; Projects, Retail Finance</b></span><span class="yr">2026 to now</span><span class="chev" aria-hidden="true"></span></summary>
           <p>I work on a new loan origination system for car finance: research with dealer sales teams, specs and user stories, business-side UAT, and the KYC capture step.</p>
         </details>
         <details class="job teal">
-          <summary><span class="jt"><b>Associate Sales Engineer Analyst</b><span>Dell Technologies · 2022 to 2023</span></span><span class="chev" aria-hidden="true"></span></summary>
+          <summary><span class="jt"><span class="co">Dell Technologies</span><b>Associate Sales Engineer Analyst</b></span><span class="yr">2022 to 2023</span><span class="chev" aria-hidden="true"></span></summary>
           <p>I presented technical solutions to enterprise customers and built the competitive analysis behind large proposals.</p>
         </details>
       </div>
       <span class="mono cvl"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg>Education</span>
       <div class="edu">
-        <div><b>International Master in Business (MBA)</b><span>SDA Bocconi Asia Center, Mumbai · 2024 to 2026</span></div>
-        <div><b>B.Tech, Electronics &amp; Instrumentation Engineering</b><span>Amrita School of Engineering, Bengaluru · 2018 to 2022</span></div>
+        <div class="dip"><span class="yr2">Class of 2026</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg></span><b class="deg">MBA</b><span class="full">International Master in Business</span><span class="sch">SDA Bocconi Asia Center</span><span class="meta">Mumbai · 2024 to 2026</span></div>
+        <div class="dip"><span class="yr2">Class of 2022</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 9.5v2.5l1.8 1.2"/></svg></span><b class="deg">B.Tech</b><span class="full">Electronics &amp; Instrumentation Engineering</span><span class="sch">Amrita School of Engineering</span><span class="meta">Bengaluru · 2018 to 2022</span></div>
       </div>
     </div>
     <div class="tb">
