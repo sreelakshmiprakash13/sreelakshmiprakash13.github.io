@@ -58,13 +58,13 @@ nav a.l:hover{color:var(--ink)}
 /* HERO: follows the reference. Centered giant word, signature name over its foot, a year pill; then photo left, About me right. */
 nav{padding:22px 0}
 nav .spread{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;list-style:none;margin:0;padding:0;font-family:var(--display);font-weight:500;font-size:clamp(13px,1.4vw,15px);text-transform:uppercase;letter-spacing:.04em}
-nav .spread a{text-decoration:none;color:var(--ink)}
+nav .spread a{text-decoration:none;color:var(--ink);display:inline-block;padding:14px 6px;margin:-14px -6px}
 nav .spread a:hover{text-decoration:underline;text-underline-offset:4px}
-nav .dots{letter-spacing:.2em;font-weight:800}
+nav .dots{width:7px;height:7px;border-radius:50%;background:var(--accent);font-size:0;flex:none}
 .title{text-align:center;padding:clamp(26px,5vw,60px) 0 0}
 .title h1{margin:0;line-height:1}
 .word{display:block;font-family:var(--display);font-weight:800;font-size:clamp(64px,15vw,210px);line-height:.85;letter-spacing:-.05em;text-transform:uppercase}
-.signame{display:block;font-family:var(--sig);font-weight:400;font-size:clamp(44px,7.4vw,104px);line-height:1;color:var(--ink);margin-top:-.42em;padding-left:clamp(40px,22vw,330px);-webkit-text-stroke:.16em var(--bg);paint-order:stroke fill;text-transform:none;letter-spacing:0}
+.signame{display:block;font-family:var(--sig);font-weight:400;font-size:clamp(44px,7.4vw,104px);line-height:1;color:var(--accent);margin-top:-.42em;padding-left:clamp(40px,22vw,330px);-webkit-text-stroke:.16em var(--bg);paint-order:stroke fill;text-transform:none;letter-spacing:0}
 .year{display:inline-block;margin-top:22px;border:1.5px solid var(--ink);border-radius:999px;padding:4px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
 .intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,56px);align-items:end;margin-top:clamp(24px,4vw,48px)}
 .photo{display:flex;justify-content:center;min-width:0}
@@ -171,6 +171,8 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 
 /* ABOUT */
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;margin-top:26px}
+.edublk{grid-column:1/-1;display:grid;gap:12px;min-width:0}
+@media (max-width:760px){.edublk{order:2}.tb{order:3}}
 .about p{margin:0 0 14px;max-width:36em}
 .cv{display:grid;gap:12px;align-content:start;min-width:0}
 .cvl{color:var(--muted);display:flex;align-items:center;gap:8px}
@@ -219,7 +221,7 @@ h2 .s{font-family:var(--sig);font-weight:400;letter-spacing:0;color:var(--muted)
 .mail{font-family:var(--mono);font-size:15px;word-break:break-all}
 .btns{display:flex;flex-wrap:wrap;gap:10px}
 .btn{appearance:none;cursor:pointer;border:2px solid var(--ink);background:transparent;color:var(--ink);font:600 15px var(--body);padding:10px 18px;border-radius:999px;text-decoration:none}
-.btn.fill{background:var(--ink);color:var(--bg)}
+.btn.fill{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn[aria-disabled="true"]{opacity:.5;cursor:default}
 /* Button feedback: lift on hover, press on tap */
 .cta,.links a,.btn{transition:transform .18s ease,box-shadow .18s ease,background-color .18s,color .18s}
@@ -251,6 +253,12 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
   .flow span{counter-increment:fl}
   .flow span::before{content:counter(fl) ". ";color:var(--muted)}
   .fold .name{font-size:14px}
+}
+.js .more{display:none}
+@media (max-width:640px){
+  .js .board:not(.full) .x,.js .board:not(.full) .mock,.js .board:not(.full) .change,.js .board:not(.full) .collage{display:none}
+  .js .more{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:6px 0 14px;appearance:none;border:1.5px dashed var(--line);background:transparent;color:var(--ink);font:600 15px var(--body);padding:12px;border-radius:14px;cursor:pointer}
+  .js .board.full .more{display:none}
 }
 </style>
 
@@ -429,17 +437,20 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
           <p>I presented technical solutions to enterprise customers and built the competitive analysis behind large proposals.</p>
         </details>
       </div>
-      <span class="mono cvl"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg>Education</span>
-      <div class="edu">
-        <div class="dip"><span class="yr2">Class of 2026</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg></span><b class="deg">MBA</b><span class="full">International Master in Business</span><span class="sch">SDA Bocconi Asia Center</span><span class="meta">Mumbai · 2024 to 2026</span></div>
-        <div class="dip"><span class="yr2">Class of 2022</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 9.5v2.5l1.8 1.2"/></svg></span><b class="deg">B.Tech</b><span class="full">Electronics &amp; Instrumentation Engineering</span><span class="sch">Amrita School of Engineering</span><span class="meta">Bengaluru · 2018 to 2022</span></div>
-      </div>
+
     </div>
     <div class="tb">
       <span class="mono cvl"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L3.5 17.5l3 3 5.7-5.7a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Toolbox</span>
       <div class="trow"><span class="gi" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l2 2 3.5-3.5M7 15.5h10"/></svg></span><div><b>Product &amp; delivery</b><div class="chips"><span>Jira</span><span>Confluence</span><span>Figma</span><span>Notion</span></div></div></div>
       <div class="trow"><span class="gi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><b>Data &amp; analysis</b><div class="chips"><span>SQL</span><span>Excel</span><span>Power BI</span></div></div></div>
       <div class="trow"><span class="gi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><div><b>AI &amp; prototyping</b><div class="chips"><span>LLMs</span><span>Gemini API</span><span>Python</span><span>Google Colab</span></div></div></div>
+    </div>
+    <div class="edublk">
+      <span class="mono cvl"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg>Education</span>
+      <div class="edu">
+        <div class="dip"><span class="yr2">Class of 2026</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9.5v5"/></svg></span><b class="deg">MBA</b><span class="full">International Master in Business</span><span class="sch">SDA Bocconi Asia Center</span><span class="meta">Mumbai · 2024 to 2026</span></div>
+        <div class="dip"><span class="yr2">Class of 2022</span><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 9.5v2.5l1.8 1.2"/></svg></span><b class="deg">B.Tech</b><span class="full">Electronics &amp; Instrumentation Engineering</span><span class="sch">Amrita School of Engineering</span><span class="meta">Bengaluru · 2018 to 2022</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -471,6 +482,12 @@ folds.forEach(function(f){
       document.getElementById(g.dataset.board).hidden=!on;
     });
   });
+});
+document.querySelectorAll('.board').forEach(function(b){
+  b.querySelectorAll('.col .n').forEach(function(n){var l=(n.querySelector('.lbl')||{}).textContent||'';if(!/^(Problem|Decision)$/i.test(l.trim()))n.classList.add('x');});
+  var m=document.createElement('button');m.type='button';m.className='more';m.textContent='Show the full story ↓';
+  m.addEventListener('click',function(){b.classList.add('full');});
+  var l=b.querySelector('.links');if(l)b.insertBefore(m,l);
 });
 document.getElementById('copy').addEventListener('click',function(){
   var btn=this,t=document.getElementById('mail').textContent;
