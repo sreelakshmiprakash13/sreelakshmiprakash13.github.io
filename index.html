@@ -301,9 +301,9 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
       <span class="tag">AI evaluation · Oct 2026</span>
     </button>
     <button class="fold teal" type="button" aria-pressed="false" aria-controls="p2" data-board="p2">
-      <div class="icon" aria-hidden="true"><div class="back"></div><div class="sheet"><b>6 of 40</b><span>KYC reviews: locked out</span></div><div class="front"><i>Fintech · Onboarding</i></div></div>
-      <span class="name">The KYC dead end</span>
-      <span class="tag">Teardown of 3 lending apps · Sep 2026</span>
+      <div class="icon" aria-hidden="true"><div class="back"></div><div class="sheet"><b>6 of 40</b><span>KYC reviews: number-change gap</span></div><div class="front"><i>Fintech · Onboarding</i></div></div>
+      <span class="name">The number-change recovery gap</span>
+      <span class="tag">KYC study of 3 lending apps · Sep 2026</span>
     </button>
     <button class="fold orange" type="button" aria-pressed="false" aria-controls="p3" data-board="p3">
       <div class="icon" aria-hidden="true"><div class="back"></div><div class="sheet"><b>37%</b><span>unhappy: cleaning gap</span></div><div class="front"><i>E-commerce</i></div></div>
@@ -317,7 +317,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
     <div class="bhead"><h3>When should a lender trust AI to read KYC documents?</h3><span class="pill">Evaluated on specimen data</span></div>
     <div class="grid">
       <div class="col">
-        <div class="n"><span class="lbl">Problem</span><p>When instant KYC fails, borrowers upload PAN and Aadhaar photos. A misread PAN that slips through is a fraud risk for the lender. Checking every upload by hand is slow.</p></div>
+        <div class="n"><span class="lbl">Problem</span><p>When instant KYC doesn’t go through, borrowers upload PAN and Aadhaar photos. A misread PAN that slips through is a fraud risk for the lender. Checking every upload by hand is slow.</p></div>
         <div class="n"><span class="lbl">My role</span><p>Solo. I framed the question, designed the test, ran it, and made the call.</p></div>
         <div class="n"><span class="lbl">Decision</span><p>Auto-accept only if free format checks pass and confidence is at least 0.95.</p></div>
         <div class="n"><span class="lbl">Trade-off</span><p>Confidence alone auto-accepted all 72 but let 3 wrong PANs through. Adding format checks sends 3 more to a person and catches all 3.</p></div>
@@ -351,7 +351,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
     <div class="bhead"><h3>Why borrowers who changed their number can't finish KYC</h3><span class="pill">Proposal · prototyped</span></div>
     <div class="grid">
       <div class="col">
-        <div class="n"><span class="lbl">Problem</span><p>Borrowers who changed their number, or use two SIMs, are told their PAN is "already registered". There is no way out in the app, and codes go to the old number.</p></div>
+        <div class="n"><span class="lbl">Problem</span><p>Borrowers who changed their number, or use two SIMs, are told their PAN is "already registered". There is no self-serve recovery path yet, a gap many lending apps share, and codes go to the number on file.</p></div>
         <div class="n"><span class="lbl">My role</span><p>Solo. I walked through Navi, KreditBee and Money View, analysed 102 reviews, and chose the fix.</p></div>
         <div class="n"><span class="lbl">Decision</span><p>Out of six options: move the account in the app with a live selfie and a ₹1 UPI payment from the borrower. Support tickets and second accounts were rejected.</p></div>
         <div class="n"><span class="lbl">Trade-off</span><p>Any recovery path can be a takeover path. A 24-hour hold, alerts and a fraud stop rule limit it.</p></div>
@@ -360,7 +360,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
         <div class="phones">
           <div class="ph bad">PAN already in use</div><div class="ph">Choose a path</div><div class="ph">Live selfie</div><div class="ph">Pay ₹1 by UPI</div><div class="ph">Account moved</div>
         </div>
-        <div class="cap">Today's dead end, then the five-step fix (Figma prototype).</div>
+        <div class="cap">Today's flow, then the five-step recovery (Figma prototype).</div>
       </div>
       <div class="measure">
         <span class="lbl">How I'd test it</span>
@@ -369,9 +369,9 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
         <div class="kpi"><b>30 days</b><span>fraud and dispute guardrail</span></div>
       </div>
     </div>
-    <div class="change"><span class="lbl">What I'd do differently</span><p>Reviews prove the dead end exists, not how common it is. I'd talk to people who changed their number and get a lender's real lock rate.</p></div>
-    <div class="collage"><span class="mono">From the work · Figma prototype</span><div class="pile phones"><img src="img/k0.webp" alt="Today: PAN already registered, a dead end"><img src="img/k1.webp" alt="Choose: log in with the old number or move the account"><img src="img/k3.webp" alt="Take a live selfie"><img src="img/k4.webp" alt="Pay one rupee by UPI to confirm the bank account"><img src="img/k5.webp" alt="Account moved to the new number"></div></div>
-    <div class="links"><a class="main" href="case/kyc-teardown.html">Read the case study</a><a href="https://www.figma.com/design/jKBAlixuclvfFe1NVdcEnW">Prototype</a></div>
+    <div class="change"><span class="lbl">What I'd do differently</span><p>Reviews show the gap exists, not how common it is. I'd talk to people who changed their number and get a lender's real lock rate.</p></div>
+    <div class="collage"><span class="mono">From the work · Figma prototype</span><div class="pile phones"><img src="img/k0.webp" alt="Today: PAN already registered, no self-serve path yet"><img src="img/k1.webp" alt="Choose: log in with the old number or move the account"><img src="img/k3.webp" alt="Take a live selfie"><img src="img/k4.webp" alt="Pay one rupee by UPI to confirm the bank account"><img src="img/k5.webp" alt="Account moved to the new number"></div></div>
+    <div class="links"><a class="main" href="case/kyc-recovery-study.html">Read the case study</a><a href="https://www.figma.com/design/jKBAlixuclvfFe1NVdcEnW">Prototype</a></div>
   </article>
 
   <!-- Board 3 -->
@@ -379,7 +379,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
     <div class="bhead"><h3>Will a dishwasher work for my cooking and my kitchen?</h3><span class="pill">Proposal · prototyped</span></div>
     <div class="grid">
       <div class="col">
-        <div class="n"><span class="lbl">Problem</span><p>First-time buyers can't tell if it will clean their vessels. Listings are replacement-only, so a wrong buy is stuck.</p></div>
+        <div class="n"><span class="lbl">Problem</span><p>First-time buyers can't tell if it will clean their vessels. Listings are replacement-only, so getting the choice right before buying matters most.</p></div>
         <div class="n"><span class="lbl">My role</span><p>Solo. I collected 485 Flipkart reviews, analysed the 67 unhappy ones, and changed my own idea when they disagreed.</p></div>
         <div class="n"><span class="lbl">The pivot</span><p>I started with "will it fit my kitchen?". Only 4 of the 67 unhappy reviews were about the site not being ready; 25 were about cleaning. So I changed the question.</p></div>
         <div class="n"><span class="lbl">Decision</span><p>Out of six options: an optional 60-second fit check on the product page. Rules only, no AI. Longer returns were rejected as too costly.</p></div>
@@ -394,7 +394,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
           <div class="row"><span>Hard water</span><span>Add salt</span></div>
           <div class="row"><span>16A socket</span><span>Not sure</span></div>
         </div>
-        <div class="cap">Answers go to the installer, so the first visit isn't wasted.</div>
+        <div class="cap">Answers go to the installer, so the first visit can finish the job.</div>
       </div>
       <div class="measure">
         <span class="lbl">How I'd test it</span>
@@ -414,7 +414,7 @@ footer{padding-top:26px;color:var(--muted);font-size:13px;display:flex;justify-c
   <p class="sub">Pinned above my desk, more or less.</p>
   <ol class="rules">
     <li class="rule"><span class="no">No. 01</span><h3>Understand the problem first</h3><p>Before any idea, I make sure I can explain the problem in one plain sentence.</p></li>
-    <li class="rule"><span class="no">No. 02</span><h3>Read the angriest reviews first</h3><p>The 1-star reviews show where it actually hurts, and what people expected.</p></li>
+    <li class="rule"><span class="no">No. 02</span><h3>Read the 1-star reviews first</h3><p>They show where people expected more, and what they expected.</p></li>
     <li class="rule"><span class="no">No. 03</span><h3>Use it myself before I judge it</h3><p>I go through the product as a user would, and note every place I get stuck.</p></li>
     <li class="rule"><span class="no">No. 04</span><h3>Keep asking why</h3><p>The first answer is usually a symptom. I stop when the answer gets boring.</p></li>
     <li class="rule"><span class="no">No. 05</span><h3>Not every fix is a feature</h3><p>Sometimes a small fix to what already exists saves more time and effort than anything new.</p></li>

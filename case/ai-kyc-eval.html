@@ -20,7 +20,7 @@
     <h1>When should a lender trust AI to read KYC documents?</h1>
     <p class="answer">Auto-accept an AI-read PAN or Aadhaar only if it passes free format checks <b>and</b> has confidence of at least 0.95. On 72 test uploads this auto-accepted 96% with zero wrong documents let through. The model's own confidence could not have caught the errors.</p>
     <div class="meta">
-      <div><b>My role</b><span>Solo, self-initiated</span></div>
+      <div><b>My role</b><span>Solo project</span></div>
       <div><b>Type</b><span>AI evaluation, routing rule, PRD</span></div>
       <div><b>When</b><span>Oct 2026</span></div>
       <div><b>Status</b><span>Evaluated on specimen data</span></div>
@@ -28,6 +28,7 @@
     <div class="links">
       <a class="main" href="https://colab.research.google.com/drive/18BqDUfkCWQHm5Rpt2-ifFCBHhbVCy37N?usp=sharing">Colab notebook</a>
       <a href="../docs/AI_KYC_Routing_PRD.pdf">One-page PRD (PDF)</a>
+      <a href="../docs/AI_KYC_Eval_Case_Study.pdf">Deck (PDF)</a>
       <a href="https://north-server-55a.notion.site/7493cf6921f48255bcbe01a69c53103e">Full deck (Notion)</a>
     </div>
   </div>
@@ -40,7 +41,7 @@
 
 <section>
   <h2><span class="n">01 · Problem</span>The question isn't "how accurate is the model?"</h2>
-  <p>In UAT on a lending platform, I found that OCR read KYC fields correctly from PDFs but failed on scanned copies. Borrowers on the upload path send scans and phone photos, not clean PDFs.</p>
+  <p>In UAT on a lending platform, I saw that OCR was reliable on PDFs and less reliable on scanned copies, a common pattern for document OCR. Borrowers on the upload path send scans and phone photos, not clean PDFs.</p>
   <div class="who">
     <div class="card"><span class="lbl">Who it's for</span><p>Borrowers who reach the upload fallback because DigiLocker, Aadhaar OTP and CKYC didn't work for them, and the ops reviewers who check flagged documents.</p></div>
     <div class="card"><span class="lbl">Why it's hard</span><p>A wrong PAN that passes silently is a fraud and compliance risk. Reviewing everything by hand is slow and costly. So the real question is <b>which documents can we safely auto-accept?</b></p></div>
@@ -106,7 +107,7 @@
 
 <div class="next">
   <a href="../#work"><span class="mono">Back</span><b>All work</b></a>
-  <a href="kyc-teardown.html"><span class="mono">Next project</span><b>Why borrowers who changed their number can't finish KYC</b></a>
+  <a href="kyc-recovery-study.html"><span class="mono">Next project</span><b>Why borrowers who changed their number can't finish KYC</b></a>
 </div>
 <footer>© Sreelakshmi Prakash</footer>
 </div>
