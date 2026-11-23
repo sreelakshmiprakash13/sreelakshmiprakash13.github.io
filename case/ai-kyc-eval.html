@@ -74,6 +74,29 @@
     <tr><td>A. Confidence only</td><td class="num">100% (72/72)</td><td class="num">3 (4.2%)</td></tr>
     <tr class="pick"><td>B. Format checks + confidence (chosen)</td><td class="num">96% (69/72)</td><td class="num">0</td></tr>
   </table></div>
+  <div class="try">
+    <span class="lbl">Try it</span><h3>Move the confidence threshold</h3>
+    <div class="thr2">
+      <div class="top"><span>Auto-accept a document only if every decision field is at least</span><span class="big" id="tv">0.95</span></div>
+      <input type="range" id="tr" min="0" max="6" step="1" value="5" aria-label="Confidence threshold">
+      <div class="ticks"><span>0.50</span><span>0.60</span><span>0.70</span><span>0.80</span><span>0.90</span><span>0.95</span><span>0.97</span></div>
+      <div class="rules2">
+        <div class="r"><span class="lbl">A · Confidence only</span><b class="n" id="aA"></b><div class="bar"><i id="bA"></i></div><span id="wA" class="bad"></span></div>
+        <div class="r pick"><span class="lbl">B · Format checks + confidence</span><b class="n" id="aB"></b><div class="bar"><i id="bB"></i></div><span id="wB" class="bad"></span></div>
+      </div>
+      <p class="demo-note" id="tnote"></p>
+    </div>
+  </div>
+  <script>
+  (()=>{const T=[0.50,0.60,0.70,0.80,0.90,0.95,0.97];
+  const B=t=>t<=0.95?69:68, r=document.getElementById('tr');
+  const set=(id,v)=>document.getElementById(id).textContent=v;
+  function draw(){const t=T[+r.value];set('tv',t.toFixed(2));
+   set('aA','72 of 72 auto-accepted');document.getElementById('bA').style.width='100%';set('wA','3 wrong documents let through');document.getElementById('wA').style.color='#A33A2E';
+   const b=B(t);set('aB',b+' of 72 auto-accepted');document.getElementById('bB').style.width=(b/72*100)+'%';set('wB','0 wrong documents let through');document.getElementById('wB').style.color='var(--teal)';
+   set('tnote',t<=0.95?'From 0.50 to 0.95 the results don\u2019t change: the model rated almost every field 0.99 or 1.0. Rule B sends exactly the 3 misread PANs to a person.':'At 0.97 Rule B starts sending a correct document to review too (68 of 72), with no extra safety. That\u2019s why I stopped at 0.95.');}
+  r.addEventListener('input',draw);draw();})();
+  </script>
   <p style="margin-top:14px">Rule A let all 3 errors through at every threshold up to 0.99. Rule B caught them because a PAN must end in a letter. The 3 documents it sent to a person were exactly the 3 misread PANs.</p>
   <div class="card"><span class="lbl">Why 0.95</span><p style="margin:0">The model rated almost every field 0.99 or 1.0, so with format checks on, every threshold from 0.50 to 0.95 gave the same result: 69 of 72 auto-accepted, zero wrong. At 0.97 auto-accept fell to 68 of 72 with no extra safety. I picked 0.95, the strictest setting that cost nothing, to keep a margin in case a future model or harder documents bring confidence down. The notebook's own pick was 0.50, because it breaks ties with the lowest value.</p></div>
   <div class="callout"><p><b>Trade-off:</b> Rule B sends 3 more uploads to a person (4% more manual review) to stop 3 wrong PANs. Format checks are free to run, and a wrong auto-accept costs far more than a review.</p></div>

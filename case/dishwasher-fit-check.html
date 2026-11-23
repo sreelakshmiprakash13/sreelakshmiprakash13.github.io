@@ -93,6 +93,53 @@
   </ol>
   <p>Rules only, no AI. The vessel rules follow Bosch's dishwasher guide: aluminium, cast iron, non-stick, copper and wood shouldn't go in.</p>
   <div class="callout"><p><b>Trade-off:</b> an honest "your aluminium kadai won't go in" will lose some sales. With a replacement-only policy, a lost sale costs less than a buyer whose machine doesn't suit them and a 1-star review. A conversion guardrail keeps that loss in check.</p></div>
+  <div class="try" id="fitdemo">
+    <span class="lbl">Try it</span><h3>Run the fit check yourself</h3>
+    <div class="fit">
+      <form id="fitform" onsubmit="return false">
+        <div class="q"><b>1. People at home</b><div class="opts"><label><input type="radio" name="hh" value="1-2"><span>1–2</span></label><label><input type="radio" name="hh" value="3-4" checked><span>3–4</span></label><label><input type="radio" name="hh" value="5+"><span>5 or more</span></label></div></div>
+        <div class="q"><b>2. What you wash every day</b><div class="opts"><label><input type="checkbox" name="v" value="steel" data-ok="1" checked><span>Steel plates and bowls</span></label><label><input type="checkbox" name="v" value="pans" data-ok="1" checked><span>Steel tea and milk pans</span></label><label><input type="checkbox" name="v" value="glass" data-ok="1"><span>Glass and ceramic</span></label><label><input type="checkbox" name="v" value="cooker" data-ok="0"><span>Aluminium pressure cooker</span></label><label><input type="checkbox" name="v" value="kadai" data-ok="0" checked><span>Aluminium kadai</span></label><label><input type="checkbox" name="v" value="tawa" data-ok="0"><span>Cast-iron tawa</span></label><label><input type="checkbox" name="v" value="nonstick" data-ok="0"><span>Non-stick pan</span></label><label><input type="checkbox" name="v" value="copper" data-ok="0"><span>Copper or brass vessels</span></label><label><input type="checkbox" name="v" value="wood" data-ok="0"><span>Wooden spoons and ladles</span></label></div></div>
+        <div class="q"><b>3. Is your water hard? (white marks on taps and steel)</b><div class="opts"><label><input type="radio" name="water" value="yes"><span>Yes</span></label><label><input type="radio" name="water" value="no"><span>No</span></label><label><input type="radio" name="water" value="ns" checked><span>Not sure</span></label></div></div>
+        <div class="q"><b>4. A tap near the spot for the inlet hose?</b><div class="opts"><label><input type="radio" name="tap" value="yes" checked><span>Yes</span></label><label><input type="radio" name="tap" value="no"><span>No</span></label><label><input type="radio" name="tap" value="ns"><span>Not sure</span></label></div></div>
+        <div class="q"><b>5. A 16A socket within reach?</b><div class="opts"><label><input type="radio" name="socket" value="yes"><span>Yes</span></label><label><input type="radio" name="socket" value="no"><span>No</span></label><label><input type="radio" name="socket" value="ns" checked><span>Not sure</span></label></div></div>
+        <div class="q" style="margin:0"><b>6. Floor space for the machine?</b><div class="opts"><label><input type="radio" name="space" value="yes" checked><span>Yes</span></label><label><input type="radio" name="space" value="no"><span>No</span></label><label><input type="radio" name="space" value="ns"><span>Not sure</span></label></div></div>
+      </form>
+      <div class="result" aria-live="polite">
+        <span class="lbl">Your result</span>
+        <div class="v" id="fv"></div>
+        <div id="fbody"></div>
+      </div>
+    </div>
+    <p class="demo-note">A working demo of the rules in the PRD: vessel rules from Bosch's dishwasher guide, and every "Not sure" becomes a prep item instead of a yes. For this demo, "Think again" means none of your daily vessels can go in, or there's no space.</p>
+  </div>
+  <script>
+  (()=>{const f=document.getElementById('fitform');
+  const val=n=>(f.querySelector('input[name="'+n+'"]:checked')||{}).value;
+  function draw(){const vs=[...f.querySelectorAll('input[name="v"]')];
+   const sel=vs.filter(x=>x.checked), ok=sel.filter(x=>x.dataset.ok==='1'), no=sel.filter(x=>x.dataset.ok==='0');
+   const name=x=>x.nextElementSibling.textContent;
+   const prep=[];
+   const w=val('water'),t=val('tap'),s=val('socket'),sp=val('space');
+   if(w==='yes')prep.push('Dishwasher salt and rinse aid, for hard water');
+   if(w==='ns')prep.push('Check how hard your water is; you may need salt and rinse aid');
+   if(t!=='yes')prep.push('Inlet adapter, or a plumber to add a tap point');
+   if(s!=='yes')prep.push('A 16A socket within reach (an electrician can add one)');
+   if(sp==='ns')prep.push('Measure the floor space before you order');
+   let v,cls;
+   if(!sel.length){v='Pick what you wash';cls='prep';}
+   else if(!ok.length||sp==='no'){v='Think again';cls='no';}
+   else if(prep.length||no.length){v='Fit with prep';cls='prep';}
+   else{v='Good fit';cls='good';}
+   const fv=document.getElementById('fv');fv.textContent=v;fv.className='v '+cls;
+   let h='';
+   if(sp==='no')h+='<div class="sec">Space</div><ul><li>A dishwasher needs its own floor space. Check again before you buy.</li></ul>';
+   if(ok.length)h+='<div class="sec">Cleans well</div><ul>'+ok.map(x=>'<li>'+name(x)+'</li>').join('')+'</ul>';
+   if(no.length)h+='<div class="sec">Keep for hand-washing</div><ul>'+no.map(x=>'<li>'+name(x)+'</li>').join('')+'</ul>';
+   if(prep.length)h+='<div class="sec">Before installation</div><ul>'+prep.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+   if(sel.length&&cls!=='no')h+='<div class="sec">Next</div><ul><li>Models that fit a household of '+(val('hh')||'').replace('-','–').replace('5+','5 or more')+'</li><li>Your answers go to the installer, so the first visit can finish the job</li></ul>';
+   document.getElementById('fbody').innerHTML=h;}
+  f.addEventListener('change',draw);draw();})();
+  </script>
 </section>
 
 <section>
