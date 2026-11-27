@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Promise Check · Breltz pilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@500;600&display=swap">
+<style>
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0d0e18);--panel:light-dark(#f4f5f8,#161827);--ink:light-dark(#14110f,#ecebf3);
+--mute:light-dark(#5d6070,#a2a5b8);--line:light-dark(#dfe1e8,#2a2d42);--blue:light-dark(#1d2bd8,#8d97ff);
+--blue-soft:light-dark(#e8eaff,#20244a);--red:light-dark(#b8321f,#ff8a73);--red-soft:light-dark(#fbebe7,#3a1c17);
+--green:light-dark(#1f7a4d,#6fd3a0);--amber:light-dark(#9a6200,#f2c062);--amber-soft:light-dark(#fff4dc,#3a2e12)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Spectral,Georgia,serif;font-weight:600;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4vw,44px)}h2{font-size:24px;margin:34px 0 12px}h3{font-size:19px;margin:0 0 6px}
+p{margin:0 0 10px;max-width:70ch}small,.mute{color:var(--mute);font-size:13px}
+.top{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline;justify-content:space-between;padding:18px max(4vw,16px) 0}
+.brand{font:600 20px Spectral,serif}.brand b{color:var(--blue)}
+.note{font-size:13px;color:var(--mute);max-width:none}
+.ex{display:inline-block;font-size:11px;font-weight:600;color:var(--amber);background:var(--amber-soft);border-radius:4px;padding:0 5px;margin-left:4px;vertical-align:2px;white-space:nowrap}
+.call{display:inline-block;font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-soft);border-radius:4px;padding:0 5px;margin-left:4px;vertical-align:2px;white-space:nowrap}
+nav{display:flex;gap:4px;overflow-x:auto;padding:14px max(4vw,16px) 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+nav a{flex:none;padding:12px 14px;color:var(--mute);text-decoration:none;font-weight:600;font-size:15px;border-bottom:3px solid transparent;min-height:44px}
+nav a[aria-current=page]{color:var(--ink);border-color:var(--blue)}
+nav a span{font-weight:400;font-size:12px;display:block}
+main{padding:28px max(4vw,16px) 64px;max-width:1240px}
+.view{display:none}.view.on{display:block}
+.lede{font-size:17px;margin-top:10px}
+.banner{margin:22px 0;padding:16px 18px;border-left:4px solid var(--red);background:var(--red-soft);border-radius:0 8px 8px 0}
+.banner b{color:var(--red)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:2px solid var(--ink);margin-top:20px}
+.figs div{padding:14px 16px 14px 0;border-bottom:1px solid var(--line)}
+.figs strong{display:block;font:600 clamp(28px,3.4vw,38px)/1.1 Spectral,serif}
+.figs small{display:block;margin-top:4px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.g-pf{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}.g-ret{grid-template-columns:minmax(0,auto) minmax(0,1fr)}
+@media(max-width:860px){.grid2,.g-pf,.g-ret{grid-template-columns:minmax(0,1fr)}}
+.bar{display:grid;grid-template-columns:minmax(120px,15em) minmax(0,1fr) 4.5em;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
+.bar i{display:block;height:12px;border-radius:3px;background:var(--blue)}
+.bar i.r{background:var(--red)}.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar .sub{grid-column:1/-1;font-size:13px;color:var(--mute);margin-top:-4px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+button{font:600 14px Inter,sans-serif;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--mute);font-size:13px;padding:8px 10px 8px 0;border-bottom:2px solid var(--ink)}
+td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:600;border-radius:4px;padding:1px 7px;margin:2px 4px 2px 0;white-space:nowrap}
+.t-red{background:var(--red-soft);color:var(--red)}.t-amb{background:var(--amber-soft);color:var(--amber)}.t-ok{background:var(--blue-soft);color:var(--blue)}
+.pair{display:grid;gap:3px;min-width:120px}.pair i{display:block;height:8px;border-radius:2px;background:var(--line)}.pair i.k{background:var(--blue)}
+.box{background:var(--panel);border-radius:10px;padding:18px}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+label{font-size:13px;color:var(--mute);display:grid;gap:4px}
+input[type=number]{font:16px Inter,sans-serif;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:44px}
+.out{font:600 22px Spectral,serif}
+.drafts{display:grid;gap:8px}
+.drafts button{text-align:left;padding:12px;height:auto;font-weight:500;line-height:1.35}
+.drafts button[aria-pressed=true] small{color:inherit;opacity:.8}
+.ad{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ad .img{height:170px;display:grid;place-items:center;font:600 22px Spectral,serif;text-align:center;padding:16px;color:#fff}
+.ad .cap{padding:10px 12px;font-size:14px}
+.check{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.verdict{margin-top:12px;padding:12px;border-radius:8px;font-weight:600}
+.fig{position:relative;min-height:220px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.phone{width:min(340px,100%);border:10px solid var(--ink);border-radius:32px;padding:20px 16px;min-height:560px;background:var(--bg)}
+.phone h3{font-size:20px}.phone .opt{display:block;width:100%;text-align:left;margin:8px 0;font-weight:500}
+.phone .ok{background:var(--blue-soft);border-radius:10px;padding:12px;font-size:14px;margin:10px 0}
+.rec{font-size:14px}.rec div{display:grid;grid-template-columns:8em minmax(0,1fr);gap:8px;padding:7px 0;border-bottom:1px solid var(--line)}
+.rec span{color:var(--mute)}
+.src{margin-top:26px;font-size:13px;color:var(--mute);border-top:1px solid var(--line);padding-top:10px}
+pre,.scroll{overflow-x:auto}
+@media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--mute);font-size:12px}.stack td:empty{display:none}.stack td.n{text-align:start}.bar{grid-template-columns:minmax(0,1fr) 4em}.bar i{grid-column:1/-1;grid-row:2}}
+@media(prefers-reduced-motion:no-preference){.bar i,.pair i{transition:width .5s ease}}
+.band{background:var(--ink-band);color:#fff;padding:20px max(4vw,16px) 18px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:flex-end;justify-content:space-between}
+:root{--ink-band:#14110f}
+.band .brand{font:600 26px/1.1 Spectral,serif;color:#fff}.band .brand b{color:#aeb6ff}
+.band .sub{font-size:13px;color:#c9cbd6;margin-top:4px}
+.band .legend{font-size:12.5px;color:#c9cbd6;max-width:520px}
+.loopstrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:18px 0 6px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.loopstrip a{padding:12px 14px;text-decoration:none;color:var(--ink);border-right:1px solid var(--line);font-size:14px;line-height:1.35;background:var(--bg);position:relative}
+.loopstrip a:last-child{border-right:0}
+.loopstrip a b{display:block;color:var(--blue);font-size:13px}
+.loopstrip a:not(:last-child)::after{content:"→";position:absolute;right:-8px;top:50%;transform:translateY(-50%);background:var(--bg);color:var(--blue);font-weight:700;z-index:1}
+@media(max-width:700px){.loopstrip{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.loopstrip a::after{display:none}}
+.tl2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);margin-top:6px}
+.tl2 div{padding:10px 10px 0 0;position:relative;font-size:14px;line-height:1.4}
+.tl2 div::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.tl2 div.bad::before{background:var(--red)}
+.tl2 b{display:block;font-size:15px}
+.pvr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.pvr>div{border-radius:10px;padding:14px;display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center}
+.pvr .said{background:var(--red-soft)}.pvr .ships{background:var(--blue-soft)}
+.pvr h4{margin:0 0 4px;font:600 13px Inter,sans-serif;color:var(--mute)}
+.pvr p{margin:0;font-size:14px}
+.pvr svg{width:72px;height:86px}
+@media(max-width:600px){.pvr{grid-template-columns:minmax(0,1fr)}}
+.why{margin-top:28px;background:var(--panel);border-radius:10px;padding:14px 18px;font-size:14px}
+.why summary{font:600 16px Spectral,serif;cursor:pointer;min-height:28px}
+.why ul{margin:8px 0 0;padding-left:18px}.why li{margin:4px 0}
+.ig{border:1px solid var(--line);border-radius:14px;overflow:hidden;max-width:380px;background:var(--bg)}
+.ighead{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:13px}
+.ighead .av{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:600 13px Spectral,serif}
+.ighead small{color:var(--mute);margin-left:auto}
+.igimg{position:relative;aspect-ratio:1/1;overflow:hidden}
+.igimg svg{position:absolute;inset:0;width:100%;height:100%}
+.igcap{padding:8px 10px 0;font-size:13px}
+.igcta{margin:8px 10px 10px;padding:8px 10px;border-radius:8px;background:var(--panel);font-weight:600;font-size:13px;display:flex;justify-content:space-between}
+.thumb{width:40px;height:40px;border-radius:8px;flex:none;overflow:hidden}
+.thumb svg{width:100%;height:100%}
+.adn{display:flex;gap:10px;align-items:flex-start}
+.ordercard{display:flex;gap:10px;align-items:center;background:var(--panel);border-radius:10px;padding:8px;margin:8px 0 4px;font-size:13px}
+.ordercard svg{width:34px;height:40px}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="bag" viewBox="0 0 100 120"><path d="M38 18 Q50 2 62 18" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><rect x="16" y="16" width="68" height="98" rx="20" fill="currentColor"/><rect x="16" y="16" width="68" height="98" rx="20" fill="#000" opacity=".12"/><rect x="20" y="18" width="60" height="92" rx="18" fill="currentColor"/><path d="M26 38 H74" stroke="#fff" stroke-opacity=".45" stroke-width="2"/><rect x="28" y="62" width="44" height="40" rx="11" fill="#000" opacity=".14"/><path d="M34 70 H66" stroke="#fff" stroke-opacity=".4" stroke-width="2"/></symbol>
+</defs></svg>
+<header class="band">
+  <div><div class="brand">Promise <b>Check</b></div>
+  <div class="sub">Concept prototype for Breltz Bags, built from the 26 Nov discovery call · Sreelakshmi Prakash</div></div>
+  <div class="legend">How to read it: <span class="call">call</span> is what Breltz said on the call. <span class="ex">example</span> is made-up data that shows how a screen behaves once the pilot data is joined.</div>
+</header>
+<nav aria-label="Screens">
+  <a href="#monday">Monday view<span>for Aditya</span></a>
+  <a href="#ads">Ads after returns<span>for Sneha</span></a>
+  <a href="#preflight">Pre-flight check<span>for Sneha + agency</span></a>
+  <a href="#return">Return start<span>for customers + Pooja</span></a>
+</nav>
+<main>
+
+<section class="view" id="v-monday">
+  <h1>Which promises broke this month, and who fixes them</h1>
+  <p class="lede">Aditya asked for numbers instead of gut feel in the Monday meeting <span class="call">call</span>. This page answers why bags came back, which promise broke, and who owns the fix. Example data for website orders, last 4 weeks.</p>
+  <div class="loopstrip" aria-label="How the four screens connect">
+    <a href="#preflight"><b>1 · Before launch</b>Check every ad against the product truth sheet</a>
+    <a href="#return"><b>2 · At return</b>Ask why, try a save, keep the reason with the order</a>
+    <a href="#ads"><b>3 · Budget</b>Budget follows kept sales, not purchases</a>
+    <a href="#monday"><b>4 · Monday</b>One page: what broke, who fixes it</a>
+  </div>
+  <div class="grid2" style="margin-top:22px;align-items:start">
+    <div>
+      <h2 style="margin-top:0">How it built up</h2>
+      <div class="tl2">
+        <div><b>February</b>Commuter v2 launches. The old bag fit 16" laptops; v2 is officially 15.6" <span class="call">call</span></div>
+        <div class="bad"><b>March</b>An ad overlay is changed to "Fits up to 16-inch" <span class="call">call</span></div>
+        <div class="bad"><b>April</b>Returns rise while Commuter ads are scaled on ROAS that can't see returns <span class="call">call</span></div>
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-top:0">Promise vs. reality</h2>
+      <div class="pvr">
+        <div class="said"><svg viewBox="0 0 100 120" style="color:#2a2622"><use href="#bag"/><rect x="2" y="40" width="96" height="34" rx="4" fill="#b8321f" opacity=".9"/><text x="50" y="62" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="Inter">16"</text></svg><div><h4>What the ad says</h4><p>"Fits up to 16-inch laptops", and a top video with a petite creator and a small laptop <span class="call">call</span></p></div></div>
+        <div class="ships"><svg viewBox="0 0 100 120" style="color:#2a2622"><use href="#bag"/><rect x="24" y="44" width="52" height="30" rx="4" fill="#1d2bd8" opacity=".9"/><text x="50" y="64" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter">15.6"</text></svg><div><h4>What arrives</h4><p>Up to 15.6". A 16" goes in, but it's tight and the zip strains <span class="call">call</span></p></div></div>
+      </div>
+      <p class="mute" style="margin-top:8px">The Myntra listing may still show the old bag <span class="call">call</span>.</p>
+    </div>
+  </div>
+  <h2>Open promise gaps</h2>
+  <p>A promise gap is anything a buyer sees that doesn't match the bag they get. Each gap gets one owner. The Myntra listing fix has been waiting on a ticket, and each team thought another had done it <span class="call">call</span>.</p>
+  <table class="stack"><thead><tr><th>Gap</th><th>Where</th><th>Evidence from the call</th><th class="n">Linked returns <span class="ex">example</span></th><th>Owner</th><th>Fix</th></tr></thead><tbody id="gaps"></tbody></table>
+  <div class="figs">
+    <div><strong>21.5%</strong><small>customer returns, website <span class="call">call: 21–22%</span><br>target &lt; 12% in two quarters <span class="call">call</span></small></div>
+    <div><strong>~6%</strong><small>RTO (COD refused at the door), tracked separately<br>35% COD × 17–18% RTO <span class="call">call</span></small></div>
+    <div><strong>&lt; 50%</strong><small>returns with a usable reason today: over half pick "Didn't like the product" <span class="call">call</span><br>goal: a reason on every return</small></div>
+    <div><strong>9% → 18%</strong><small>contribution margin, now → goal <span class="call">call</span></small></div>
+    <div><strong>₹140–180</strong><small>reverse pickup per return, plus QC and repack; 12% resold at 40% off; stock stuck 8–10 days <span class="call">call</span></small></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <h2>Why they came back <span class="ex">example</span></h2>
+      <div id="reasons"></div>
+      <p class="mute" style="margin-top:8px">Reasons now come from the new return screen and Freshdesk tickets, linked by order ID.</p>
+    </div>
+    <div>
+      <h2>Where the returns sit</h2>
+      <div class="seg" role="group" aria-label="Break down by" id="cut"></div>
+      <div id="cutrows"></div>
+    </div>
+  </div>
+  <details class="why" style="background:var(--bg);border:1px solid var(--line)"><summary>Path to about 12% <span class="ex">illustrative, not a forecast</span></summary>
+  <p>The Commuter is about 30% of website revenue <span class="call">call</span>, so the loop has to cover every bag, not just the hero. Each step is a guess today, and they still leave a gap to close. The 6-week pilot measures the first one, the size and fit fix. The rest are measured over two quarters. The last half point is still unexplained, and Voyager 40L is where I'd look first <span class="call">call</span>.</p>
+  <div id="path"></div>
+  <p class="mute" style="margin-top:8px">What's at stake, rough: the margin gap is (18% − 9%) × ₹38 Cr ≈ <b>₹3.4 Cr a year</b> <span class="call">call</span>. Website sales are 55% × ₹38 Cr ≈ ₹21 Cr <span class="call">call</span>. Going from 21.5% to 12% returns keeps roughly <b>₹2 Cr a year</b> of sales from coming back, before the pickup and QC cost on each one. This assumes ₹38 Cr is before returns. A full margin bridge needs order value and product cost, which is a week 1 ask.</p>
+  </details>
+  <details class="why" open><summary>Why this screen is built this way</summary><ul>
+    <li>Aditya wants numbers instead of gut feel in the Monday meeting <span class="call">15:19</span>, so reasons come first and theories come last.</li>
+    <li>Each gap gets one owner, because the Myntra listing fix fell between teams <span class="call">12:54</span>.</li>
+    <li>It is website-only because Myntra's report arrives monthly, after the month closes <span class="call">08:29</span>. Myntra shows up as a gap, not a chart.</li>
+  </ul></details>
+  <p class="src">Pilot data: Shopify orders, the weekly returns sheet (has order ID and QC grade), Meta ads read access, Freshdesk export, Amazon and Myntra reports. Aditya offered all of these on the call <span class="call">call</span>.</p>
+</section>
+
+<section class="view" id="v-ads">
+  <h1>Which ads still pay once the returns are counted</h1>
+  <p class="lede">The current rule scales ads above 3x Meta-reported ROAS and kills them below 1.8x for a week <span class="call">call</span>. Meta only sees the purchase, never the return <span class="call">call</span>. This view puts both numbers side by side.</p>
+  <div class="banner" style="border-color:var(--blue);background:var(--blue-soft)"><b style="color:var(--blue)">Coverage:</b> today about 40% of orders have a source <span class="call">call</span>, and order IDs don't exist in Meta <span class="call">call</span>. From day 1, every ad gets an ad-ID URL tag and creators get separate paid codes. The table below is the week-4 view <span class="ex">example</span>. While matches are few, read it by claim group, not by single ad.</div>
+  <div class="seg" role="group" aria-label="View" id="sort"></div>
+  <table class="stack"><thead><tr><th>Ad or claim group <span class="ex">example</span></th><th>Reported vs kept ROAS</th><th class="n">Reported</th><th class="n">Kept</th><th class="n">Returned</th><th class="n">Matched orders</th><th>Top return reason</th><th>Suggested action</th></tr></thead><tbody id="adrows"></tbody></table>
+  <p class="mute" style="margin-top:8px">Kept ROAS = Meta-reported ROAS × the share of matched orders not returned by the customer. RTO is tracked separately. Matched orders are a subset, so treat this as a proxy. Reverse pickup (₹140–180 <span class="call">call</span>) and QC are not yet subtracted. A full contribution view needs order value and product cost.</p>
+  <div class="grid2" style="margin-top:28px">
+    <div class="box">
+      <h3>New rule, same spend <span class="ex">proposed starting values</span></h3>
+      <p>Aditya said "spend less on ads" is not an answer <span class="call">call</span>. So the budget stays the same and moves to ads whose bags stay sold.</p>
+      <table><tbody>
+        <tr><td>Scale</td><td>kept ROAS ≥ 2.3x (old bar of 3x, minus the ~22% returned)</td></tr>
+        <tr><td>Pause</td><td>kept ROAS &lt; 1.4x (old bar of 1.8x, same adjustment)</td></tr>
+        <tr><td>On hold</td><td>An ad with a broken promise is not scaled until it is fixed, whatever its ROAS. It keeps running.</td></tr>
+        <tr><td>Too new to judge</td><td>Orders are under 14 days old, so returns aren't in yet. Until then, use the ad's pre-flight result.</td></tr>
+        <tr><td>Later</td><td>Share kept-order value with Meta. This needs write access (Breltz offered read access <span class="call">call</span>), and Sneha isn't sure it helps <span class="call">call</span>. Test it after the pilot.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="box">
+      <h3>Agent log this week <span class="ex">example</span></h3>
+      <p>During the pilot, Breltz gives read access only <span class="call">call</span>. So the agent prepares each change, and Sneha applies it in Ads Manager. After the pilot, if Sneha agrees to ad-management access, moves under a proposed 20%-of-daily-budget cap can run on their own. Pausing a top ad always needs Sneha.</p>
+      <div id="log"></div>
+    </div>
+    <div class="box">
+      <h3>When does a high-ROAS ad lose?</h3>
+      <p>Change the numbers to see when the "best" ad stops being best.</p>
+      <div class="calc">
+        <label>Ad A reported ROAS<input type="number" id="ar" value="5" step="0.1" min="0"></label>
+        <label>Ad A returned %<input type="number" id="ap" value="41" step="1" min="0" max="100"></label>
+        <label>Ad B reported ROAS<input type="number" id="br" value="3" step="0.1" min="0"></label>
+        <label>Ad B returned %<input type="number" id="bp" value="10" step="1" min="0" max="100"></label>
+      </div>
+      <div class="out" id="calcout"></div>
+      <p class="mute" id="calcnote"></p>
+    </div>
+  </div>
+  <details class="why" open><summary>Why this screen is built this way</summary><ul>
+    <li>It keeps Sneha's ROAS column and adds kept ROAS beside it. Her dashboard "is correct for what it measures" <span class="call">09:35</span>; it just can't see returns.</li>
+    <li>It reads by claim group first, because only ~40% of orders have a source today <span class="call">08:48</span>. Single-ad numbers would be noise.</li>
+    <li>The agent prepares changes and Sneha applies them in Ads Manager. It isn't autopilot, because Breltz offered read access <span class="call">16:52</span>.</li>
+  </ul></details>
+</section>
+
+<section class="view" id="v-preflight">
+  <h1>Check every promise before it goes live</h1>
+  <p class="lede">New creatives come every week. The agency proposes, Sneha approves on a WhatsApp group, and product doesn't check the copy <span class="call">call</span>. Here the agency uploads drafts instead. Text claims are checked automatically against a product truth sheet. Scale and colour come from a 4-question checklist the agency fills in. Image checks can come later.</p>
+  <div class="grid2 g-pf">
+    <div>
+      <h2 style="margin-top:12px">This week's drafts <span class="ex">example</span></h2>
+      <div class="drafts" id="drafts"></div>
+      <div class="box" style="margin-top:18px">
+        <h3>Product truth · Commuter 28L v2</h3>
+        <p style="font-size:14px">Laptop: up to <b>15.6"</b>. A 16" laptop "goes in, but it's tight, the zip strains" <span class="call">call</span>. Built-in padded compartment. Volume 28 L. Colours: Black, Sage Green, Dusty Rose. Daylight swatch photos: to shoot in week 1.</p>
+        <div class="seg" role="group" aria-label="Laptop size" id="lap"></div>
+        <div class="fig" id="fitfig"><svg id="fitsvg" role="img" aria-label="Laptop fit in the Commuter 28L compartment"></svg></div>
+        <p class="mute">When this sheet changes, every live ad and listing is checked again. With this in place, a spec change like February's would be caught.</p>
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-top:12px">Draft preview and checks</h2>
+      <div class="ig"><div class="ighead"><span class="av">B</span><b>breltz.bags</b><small>Sponsored · draft</small></div><div class="igimg" id="adimg"></div><div class="igcap" id="adcap"></div><div class="igcta"><span>Shop now</span><span>›</span></div></div>
+      <div id="checks"></div>
+      <div id="verdict"></div>
+      <div class="seg" style="margin-top:12px">
+        <button class="pri" id="sendback">Send back to agency with fixes</button>
+        <button id="approve">Approve</button>
+      </div>
+      <p class="mute" id="actmsg" aria-live="polite"></p>
+    </div>
+  </div>
+  <details class="why" open><summary>Why this screen is built this way</summary><ul>
+    <li>It fixes the promise where it's made, before money is spent. Today copy goes from the agency to Sneha on WhatsApp, with no product check <span class="call">16:25</span>.</li>
+    <li>Text claims are checked automatically. Scale and colour start as a 4-question checklist, which is honest about what can be built in six weeks.</li>
+    <li>The product team owns the truth sheet, so a spec change like February's re-checks every live ad.</li>
+  </ul></details>
+</section>
+
+<section class="view" id="v-return">
+  <h1>Ask why at the moment of return, and save it if we can</h1>
+  <p class="lede">Pooja said some laptops do fit, the buyer just "haven't used the right compartment" <span class="call">call</span>. This step sits inside the Shopify returns app, before pickup. Unicommerce still processes the return. It asks the reason in plain words, tries a fix, and saves the answer with the order. Tip wording and photos are placeholders for Pooja and Farhan to confirm. If the returns app can't be customised, the same steps run on a short page linked from the return email.</p>
+  <div class="grid2 g-ret">
+    <div class="phone" id="phone" aria-live="polite"></div>
+    <div>
+      <h2 style="margin-top:0">What Pooja's team and this pilot see</h2>
+      <div class="rec" id="rec"></div>
+      <p class="mute" style="margin-top:12px">Today a return can sit in up to three places: the Shopify returns app, Freshdesk and a Google Sheet <span class="call">call</span>. Here it becomes one record with the order ID, so no one has to remember to paste it.</p>
+      <button id="restart" style="margin-top:8px">Start again</button>
+    </div>
+  </div>
+  <details class="why" open><summary>Why this screen is built this way</summary><ul>
+    <li>Pooja wants to catch a misunderstanding before the return <span class="call">15:57</span>, and today's dropdown is useless <span class="call">05:14</span>.</li>
+    <li>The reason is saved with the order ID automatically, because people forget to paste it into tickets <span class="call">05:51</span>.</li>
+    <li>It offers a swap before a refund. That keeps the sale and avoids the ₹140–180 pickup <span class="call">07:27</span>.</li>
+  </ul></details>
+</section>
+</main>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const pct=v=>Math.round(v)+'%';
+const CALL='<span class="call">call</span>';
+
+/* ---------- Monday view ---------- */
+const reasons=[['Smaller than expected / laptop doesn’t fit',38,1],['Colour looks different from the ad or photos',21,1],['Ordered two colours, kept one',14,0],['Changed my mind',12,0],['Damaged in transit',5,0],['Other',10,0]];
+$('reasons').innerHTML=reasons.map(r=>`<div class="bar"><span>${r[0]}</span><i class="${r[2]?'r':''}" style="width:${r[1]/38*100}%"></i><em>${r[1]}%</em></div>`).join('')+'<p class="mute" style="margin-top:6px">Red = a promise gap: the bag differs from what the buyer was shown.</p>';
+
+const EX='<span class="ex">example</span>';
+const cuts={
+ 'Product':[['Commuter 28L · Dusty Rose',36,'colour looks browner'],['Commuter 28L · Sage Green',34,'colour looks greyer'],['Voyager 40L',27,'third highest by % '+CALL+'; reason unknown today'],['Commuter 28L · Black',24,'most returned in absolute numbers '+CALL],['Other bags',14,'mixed'],['School bags',3,'"almost never come back" '+CALL]],
+ 'Channel':[['Myntra',31,'monthly report only; listing may still show the old bag '+CALL],['Website',21.5,'this page '+CALL],['Amazon',13.5,'person-scale image, 2,400 reviews '+CALL]],
+ 'Customer type':[['First-time buyer',26,'new cut from Shopify customer ID'],['Repeat buyer',8,'not tracked today '+CALL]],
+ 'Came from':[['Creator code (paid)',33,'size and colour'],['Meta ad, ad-ID tag',27,'size'],['Google search',15,'mixed'],['WhatsApp / direct (no tag)',9,'mixed']]};
+let cut='Product';
+function drawCut(){
+ $('cut').innerHTML=Object.keys(cuts).map(k=>`<button aria-pressed="${k===cut}" data-k="${k}">${k}</button>`).join('');
+ const rows=cuts[cut],max=Math.max(...rows.map(r=>r[1]));
+ $('cutrows').innerHTML=(cut==='Channel'?'<p class="mute">Customer-initiated returns by channel, as said on the call <span class="call">call</span>.</p>':'<p class="mute">'+EX+' bars; notes tagged call are facts.</p>')+rows.map(r=>`<div class="bar"><span>${r[0]}</span><i class="${r[1]>=24?'r':''}" style="width:${r[1]/max*100}%"></i><em>${r[1]}%</em><span class="sub">${r[2]}</span></div>`).join('');
+}
+$('cut').addEventListener('click',e=>{const b=e.target.closest('button');if(b){cut=b.dataset.k;drawCut()}});
+drawCut();
+
+const gaps=[
+ ['Ad copy says "Fits up to 16-inch laptops"','Meta carousel; overlay changed sometime in March','Spec is 15.6"; 16" is tight and the zip strains',118,'Sneha + agency','Change to "Fits 15.6-inch laptops"'],
+ ['Size demo uses a small laptop and a petite creator','Riya UGC video, top ad','"Mine doesn’t fit like that" tickets; laptop was probably a 13" Air, to confirm',164,'Sneha','Re-shoot the demo with a 15.6" laptop; A/B test it against the current ad'],
+ ['Listing may show the old bag','Myntra Commuter listing','Old photos with the zip-in sleeve; title may still say 30 L; screenshot pending','monthly report','Catalogue owner (to name)','Raise the Myntra category ticket this week'],
+ ['Colour shot at golden hour','Ananya Dusty Rose reel, run as a paid ad','"Looks more brown in person"',52,'Sneha','Add a daylight end-card; tag the reel "warm filter"'],
+ ['Size only as cm in a Specifications tab','Website product page','Amazon shows a person-scale image and returns less',null,'Website team','Add a person-scale photo and a "will my laptop fit?" picker']];
+const path=[['Website customer returns today',21.5,0],['Size and laptop-fit claims fixed',-5,1],['Colour shown in daylight in ads',-2,1],['Saves at return start (compartment tip, swaps)',-1,1],['Fewer two-colour orders in sales',-1,1],['If all four hold (two quarters)',12.5,0]];
+$('path').innerHTML=path.map(p=>`<div class="bar"><span>${p[0]}</span><i class="${p[1]<0?'':p[0].startsWith('If all')?'':'r'}" style="width:${Math.abs(p[1])/21.5*100}%;${p[1]<0?'background:var(--green)':''}"></i><em>${p[1]<0?p[1]+' pts':p[1]+'%'}</em></div>`).join('');
+$('gaps').innerHTML=gaps.map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td><td class="n">${g[3]==null?'all products':g[3]}</td><td>${g[4]}</td><td>${g[5]}</td></tr>`).join('');
+
+/* ---------- Ads view ---------- */
+const ads=[
+ {n:'Riya · "What’s in my bag" UGC',g:'Size / laptop-fit claim',m:'paid code + tag',o:186,p:'Commuter 28L Black',r:5.0,ret:41,why:'Smaller than in the video',flag:['t-red','Size demo'],act:'Keeps running; scaling on hold until the 15.6" re-shoot, then A/B test'},
+ {n:'"Fits up to 16-inch" carousel',g:'Size / laptop-fit claim',m:'tag',o:74,p:'Commuter 28L',r:4.2,ret:38,why:'16" laptop doesn’t fit',flag:['t-red','Claim > spec'],act:'Scaling on hold; swap in 15.6" copy, judge after 14 days'},
+ {n:'Ananya · Dusty Rose sunset reel',g:'Filtered colour',m:'paid code + tag',o:58,p:'Commuter 28L Dusty Rose',r:3.6,ret:44,why:'Colour looks brown',flag:['t-amb','Warm filter'],act:'Add daylight end-card, then re-test'},
+ {n:'Studio · "Commute ready" video',g:'No claim flagged',m:'tag',o:121,p:'Commuter 28L Black',r:3.1,ret:12,why:'Changed my mind',flag:['t-ok','Passed'],act:'Scale: bags stay sold'},
+ {n:'Static catalogue · Daily carry',g:'No claim flagged',m:'tag',o:49,p:'Mixed range',r:2.6,ret:11,why:'Mixed',flag:['t-ok','Passed'],act:'Scale gently'}];
+ads.forEach(a=>a.k=+(a.r*(1-a.ret/100)).toFixed(2));
+let sortBy='k';
+function groups(){const m={};ads.forEach(a=>{const g=m[a.g]||(m[a.g]={n:a.g,p:'claim group',o:0,rs:0,rets:0,why:a.why,flag:a.flag,m:'grouped'});g.o+=a.o;g.rs+=a.r*a.o;g.rets+=a.ret*a.o});
+ return Object.values(m).map(g=>{const r=g.rs/g.o,ret=Math.round(g.rets/g.o);return{...g,r,ret,k:+(r*(1-ret/100)).toFixed(2),act:ret>30?'Fix the claim in every ad in this group':'Scale'}})}
+function drawAds(){
+ $('sort').innerHTML=[['r','By ad: Meta-reported ROAS'],['k','By ad: kept-order ROAS'],['g','By claim group']].map(s=>`<button aria-pressed="${s[0]===sortBy}" data-s="${s[0]}">${s[1]}</button>`).join('');
+ const list=sortBy==='g'?groups().sort((a,b)=>b.k-a.k):[...ads].sort((a,b)=>b[sortBy]-a[sortBy]);
+ const TH={'Size / laptop-fit claim':['#23263a','#1b1a1f'],'Filtered colour':['#e39a6d','#c99a94'],'No claim flagged':['#e8eaf0','#1b1a1f']};
+ $('adrows').innerHTML=list.map(a=>{const t=TH[a.g]||TH['No claim flagged'];return `<tr><td><div class="adn"><span class="thumb" style="background:${t[0]}"><svg viewBox="0 0 100 120" style="color:${t[1]}"><use href="#bag"/></svg></span><div><b>${a.n}</b><br><small>${a.p}</small><br><span class="tag ${a.flag[0]}">${a.flag[1]}</span></div></div></td>
+ <td><div class="pair"><i style="width:${a.r/5*100}%"></i><i class="k" style="width:${a.k/5*100}%"></i></div></td>
+ <td class="n">${a.r.toFixed(1)}x</td><td class="n"><b>${a.k.toFixed(1)}x</b></td><td class="n">${a.ret}%</td><td class="n">${a.o}<br><small>${a.m}</small></td><td>${a.why}</td><td>${a.act}</td></tr>`}).join('');
+}
+$('sort').addEventListener('click',e=>{const b=e.target.closest('button');if(b){sortBy=b.dataset.s;drawAds()}});
+drawAds();
+const log=[
+ {t:'Hold scaling on the "Fits up to 16-inch" carousel, because its claim is bigger than the 15.6" spec. Swap in the 15.6" copy.',a:'apply'},
+ {t:'Move ₹6,000 a day from the Dusty Rose sunset reel (2.0x kept) to the Studio video (2.7x kept).',a:'apply'},
+ {t:'Hold scaling on Riya UGC until the 15.6" re-shoot is ready. It stays live: 3.0x kept still clears the bar. Then A/B test old vs re-shoot.',a:'apply'},
+ {t:'Sent the agency the fix list for 3 drafts: change the 16" copy, show a 15.6" laptop, add a daylight end-card.',a:''}];
+function drawLog(){$('log').innerHTML=log.map((l,i)=>`<div class="check" style="grid-template-columns:minmax(0,1fr) auto"><span>${l.done?l.t+'<br><b style="color:var(--green)">'+l.done+'</b>':l.t}</span><span>${l.done?'':l.a==='apply'?`<button class="pri" data-i="${i}" data-a="✓ Sent to Sneha as a change to make in Ads Manager">Prepare for Sneha</button>`:''}</span></div>`).join('')}
+$('log').addEventListener('click',e=>{const b=e.target.closest('button');if(b){log[+b.dataset.i].done=b.dataset.a;drawLog()}});
+drawLog();
+
+function calc(){
+ const ar=+$('ar').value||0,ap=Math.min(100,Math.max(0,+$('ap').value||0)),br=+$('br').value||0,bp=Math.min(100,Math.max(0,+$('bp').value||0));
+ const ak=ar*(1-ap/100),bk=br*(1-bp/100);
+ const be=ar>0?Math.max(0,(1-bk/ar)*100):0;
+ $('calcout').textContent=`Kept ROAS: A ${ak.toFixed(2)}x · B ${bk.toFixed(2)}x → ${ak>bk?'A still wins':ak<bk?'B wins':'tie'}`;
+ $('calcnote').textContent=ar>0?`A loses to B once more than ${Math.round(be)}% of A's orders come back. Measure the return rate before calling the top ad "the best".`:'';
+}
+['ar','ap','br','bp'].forEach(id=>$(id).addEventListener('input',calc));calc();
+
+/* ---------- Pre-flight ---------- */
+const drafts=[
+ {t:'Carousel · "Fits up to 16-inch laptops"',who:'Agency draft, v3',art:'carousel',head:'Fits up to 16-inch laptops',cap:'MacBook going in · Commuter 28L',
+  checks:[['bad','Claim vs spec (auto)','"16-inch" is bigger than the 15.6" limit on the truth sheet. Suggested copy: "Fits 15.6-inch laptops".'],['ok','Product version (checklist)','Shows the v2 built-in compartment.'],['ok','Colour (checklist)','Studio light, no filter.'],['warn','Scale (checklist)','No person in frame. Add a person-scale shot like the Amazon listing.']]},
+ {t:'UGC · "What’s in my bag" re-cut',who:'Creator: Riya (RIYA15)',art:'ugc',head:'Laptop, lunch box, bottle: all in',cap:'Shot on phone · wide lens · Commuter 28L Black',
+  checks:[['bad','Laptop shown (checklist)','Agency answer (example): "13-inch". The video shows a full laptop fit, so show a 15.6" laptop.'],['warn','Scale (checklist)','Wide phone lens and a petite creator. Add an on-screen line with the bag size and laptop limit.'],['ok','Claim vs spec (auto)','No size number in the copy.'],['ok','Colour (checklist)','Black, no filter.']]},
+ {t:'Reel · Dusty Rose at sunset',who:'Creator: Ananya (ANANYA15)',art:'reel',head:'Golden hour, Goa',cap:'Partnership ad · Commuter 28L Dusty Rose',
+  checks:[['bad','Colour (checklist)','Agency answer (example): "golden hour, warm filter". Add a 2-second daylight end-card next to the studio swatch.'],['ok','Claim vs spec (auto)','No size claim.'],['ok','Product version (checklist)','v2.'],['warn','Return history (auto)','Dusty Rose is one of the highest by return % (call). Approve only with the end-card.']]}];
+const ART={
+ carousel:{bg:'#23263a',bg2:'#4b4f6b',bag:'#1b1a1f',lap:16,person:0,sun:0},
+ ugc:{bg:'#d9c6ad',bg2:'#efe2cf',bag:'#1b1a1f',lap:13,person:1,sun:0},
+ reel:{bg:'#c9775c',bg2:'#f3b77d',bag:'#c99a94',lap:0,person:0,sun:1}};
+function art(k,head){const a=ART[k];const lw=a.lap===16?150:a.lap===13?96:0;
+ return `<svg viewBox="0 0 300 300" role="img" aria-label="Draft ad: ${head}"><defs><linearGradient id="g${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a.bg2}"/><stop offset="1" stop-color="${a.bg}"/></linearGradient></defs>
+ <rect width="300" height="300" fill="url(#g${k})"/>
+ ${a.sun?'<circle cx="230" cy="70" r="34" fill="#ffe0a3" opacity=".9"/><rect width="300" height="300" fill="#ff9a3c" opacity=".18"/>':''}
+ ${a.person?'<g fill="#7a6a5c"><circle cx="232" cy="96" r="18"/><rect x="208" y="118" width="48" height="114" rx="22"/></g>':''}
+ <g style="color:${a.bag}" transform="translate(${a.person?40:92},${a.person?64:78}) scale(${a.person?1.4:1.16})"><use href="#bag" width="100" height="120"/></g>
+ ${lw?`<rect x="${(a.person?110:150)-lw/2}" y="${a.person?60:24}" width="${lw}" height="${a.person?62:64}" rx="6" fill="#c9ced8" stroke="#8b92a3" stroke-width="2"/><text x="${a.person?110:150}" y="${a.person?97:62}" text-anchor="middle" font-size="16" font-weight="700" font-family="Inter" fill="#3a3f4d">${a.lap}"</text>`:''}
+ <rect x="0" y="232" width="300" height="68" fill="#000" opacity=".38"/><text x="150" y="272" text-anchor="middle" fill="#fff" font-size="${head.length>30?15:19}" font-weight="600" font-family="Spectral,serif">${head}</text></svg>`}
+let di=0;
+function drawDraft(){
+ $('drafts').innerHTML=drafts.map((d,i)=>`<button aria-pressed="${i===di}" data-i="${i}"><b>${d.t}</b><br><small>${d.who}</small></button>`).join('');
+ const d=drafts[di];
+ $('adimg').innerHTML=art(d.art,d.head);$('adcap').textContent=d.cap;
+ const lab={bad:['t-red','Blocks'],warn:['t-amb','Fix'],ok:['t-ok','Pass']};
+ $('checks').innerHTML=d.checks.map(c=>`<div class="check"><span class="tag ${lab[c[0]][0]}">${lab[c[0]][1]}</span><span><b>${c[1]}.</b> ${c[2]}</span></div>`).join('');
+ const nb=d.checks.filter(c=>c[0]==='bad').length;
+ $('verdict').innerHTML=`<div class="verdict" style="background:${nb?'var(--red-soft)':'var(--blue-soft)'};color:${nb?'var(--red)':'var(--blue)'}">${nb?nb+' promise would break: fix before it runs':'Ready to run'}</div>`;
+ $('actmsg').textContent='';
+}
+$('drafts').addEventListener('click',e=>{const b=e.target.closest('button');if(b){di=+b.dataset.i;drawDraft()}});
+$('sendback').addEventListener('click',()=>{$('actmsg').textContent='Fix list sent to the agency automatically. The new version comes back here, not to WhatsApp.'});
+$('approve').addEventListener('click',()=>{const nb=drafts[di].checks.some(c=>c[0]==='bad');$('actmsg').textContent=nb?'Approved over a block. The decision is logged with Sneha\u2019s name, so returns from this ad can be traced back to it.':'Approved. Its orders will be tracked with an ad-ID URL tag.'});
+drawDraft();
+
+let lap='15.6';
+const fs=$('fitsvg');
+function drawFit(){
+ $('lap').innerHTML=['13','15.6','16'].map(s=>`<button aria-pressed="${s===lap}" data-l="${s}">${s}" laptop</button>`).join('');
+ const W=fs.clientWidth||320,H=fs.clientHeight||220,cx=W/2;
+ const bw=Math.min(W*0.6,260),bh=H*0.74,bx=cx-bw/2,by=H*0.1;
+ const slotW=bw*0.82,sx=cx-slotW/2;
+ const lw=slotW*({'13':0.78,'15.6':0.97,'16':1.06}[lap]);
+ const over=lap==='16',lx=cx-lw/2;
+ const c=getComputedStyle(document.body);
+ const ink=c.getPropertyValue('--ink'),blue=c.getPropertyValue('--blue'),red=c.getPropertyValue('--red'),line=c.getPropertyValue('--line'),panel=c.getPropertyValue('--bg');
+ fs.innerHTML=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="34" fill="${panel}" stroke="${ink}" stroke-width="2"/>
+ <rect x="${sx}" y="${by+26}" width="${slotW}" height="${bh-44}" rx="10" fill="none" stroke="${line}" stroke-width="2" stroke-dasharray="5 4"/>
+ <rect x="${lx}" y="${by+34}" width="${lw}" height="${bh*0.62}" rx="6" fill="${over?red:blue}" opacity=".85"/>
+ <text x="${cx}" y="${by+34+bh*0.31}" text-anchor="middle" fill="#fff" font-size="15" font-weight="600" font-family="Inter">${lap}"</text>
+ <text x="${cx}" y="${H-4}" text-anchor="middle" fill="${over?red:ink}" font-size="13" font-family="Inter">${over?'Tight: zip strains (call)':lap==='13'?'Loose: likely what the top ad shows':'Fits: the official limit'}</text>`;
+}
+$('lap').addEventListener('click',e=>{const b=e.target.closest('button');if(b){lap=b.dataset.l;drawFit()}});
+const fro=new ResizeObserver(drawFit);fro.observe(fs);
+
+/* ---------- Return start ---------- */
+const rec0={'Order':'#BRZ-10482 · Commuter 28L Black (example)','Came from':'Meta ad · Riya UGC (ad-ID tag; shown only on tagged orders)','Customer':'First-time buyer, prepaid'};
+let rec={},step='start';
+const steps={
+ start:{h:'What’s not right with your Commuter 28L?',o:[['My laptop doesn’t fit','fit'],['It’s smaller than I expected','small'],['The colour looks different','colour'],['I ordered two colours, keeping one','two'],['It arrived damaged','dmg'],['Something else','other']]},
+ fit:{h:'Which laptop are you carrying?',o:[['13–14 inch','fitok'],['15.6 inch','fitok'],['16 inch','fit16'],['17 inch or bigger','fit17']],set:{'Reason':'Laptop doesn’t fit'}},
+ fitok:{h:'It should fit. Try the back compartment',p:'Slide the laptop into the padded compartment against the back panel, not the front pocket. It takes 15 seconds.',o:[['It fits now: keep my bag','saved'],['Still doesn’t fit','ret']],set:{'Fix offered':'Compartment tip'}},
+ fit16:{h:'A 16" laptop goes in, but it’s a tight fit',p:'Use the padded back compartment and close the zip slowly. If it still doesn’t work for you, we can swap it for a bag that fits 16" (range to confirm with Farhan).',o:[['It works now: keep my bag','saved'],['Swap for a roomier bag','swap'],['Continue return','ret']],set:{'Promise gap':'Laptop size: ad vs 15.6" spec'}},
+ fit17:{h:'This bag isn’t made for a 17" laptop',p:'We can swap it for a roomier bag, or you can return it.',o:[['Swap for a roomier bag','swap'],['Continue return','ret']],set:{'Promise gap':'Laptop size: ad vs 15.6" spec'}},
+ small:{h:'Where did you see the bag before buying?',o:[['Instagram video or reel','smallv'],['Product photos','ret'],['Somewhere else','ret']],set:{'Reason':'Smaller than expected'}},
+ smallv:{h:'Thanks, that helps us fix our videos',p:'[Photo: the bag worn by people of different heights, for scale]',o:[['Keep it after all','saved'],['Continue return','ret']],set:{'Promise gap':'Size demo in video'}},
+ colour:{h:'Compare with the daylight photo',p:'[Photo: the same colour in daylight, next to the studio shot]',o:[['Swap for another colour','swap'],['Continue return','ret']],set:{'Reason':'Colour differs','Promise gap':'Colour vs daylight photo'}},
+ two:{h:'Which one are you sending back?',o:[['Sage Green','ret'],['Black','ret']],set:{'Reason':'Bought two colours'}},
+ dmg:{h:'Sorry about that. Add one photo',p:'Pooja’s team will review it and arrange a replacement or refund.',o:[['Upload photo and continue','ret']],set:{'Reason':'Damaged in transit'}},
+ other:{h:'Tell us in a sentence',p:'(Free text, sorted into a reason automatically.)',o:[['Continue','ret']],set:{'Reason':'Other (free text)'}},
+ saved:{h:'Great, enjoy the bag',p:'No pickup booked. No reverse shipping, QC or repacking needed.',o:[],set:{'Outcome':'Return avoided'}},
+ swap:{h:'Swap requested',p:'Pooja’s team will confirm the new bag with you.',o:[],set:{'Outcome':'Exchange, not refund'}},
+ ret:{h:'Return requested',p:'Pickup and refund follow Breltz’s return policy.',o:[],set:{'Outcome':'Returned'}}};
+function drawPhone(){
+ const s=steps[step];if(s.set)Object.assign(rec,s.set);
+ $('phone').innerHTML=`<small>Breltz · Start a return</small><div class="ordercard"><svg viewBox="0 0 100 120" style="color:#1b1a1f"><use href="#bag"/></svg><div><b>Commuter 28L · Black</b><br><span class="mute">Order #BRZ-10482 · example</span></div></div><h3 style="margin-top:8px">${s.h}</h3>${s.p?`<div class="ok">${s.p}</div>`:''}${s.o.map(o=>`<button class="opt" data-go="${o[1]}">${o[0]}</button>`).join('')}`;
+ const all={...rec0,...rec};
+ $('rec').innerHTML=Object.entries(all).map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('');
+}
+$('phone').addEventListener('click',e=>{const b=e.target.closest('button');if(b){step=b.dataset.go;drawPhone()}});
+$('restart').addEventListener('click',()=>{rec={};step='start';drawPhone()});
+drawPhone();
+
+/* ---------- routing ---------- */
+const views={monday:'v-monday',ads:'v-ads',preflight:'v-preflight',return:'v-return'};
+function route(){
+ const k=views[location.hash.slice(1)]?location.hash.slice(1):'monday';
+ for(const [h,id] of Object.entries(views))$(id).classList.toggle('on',h===k);
+ document.querySelectorAll('nav a').forEach(a=>{if(a.getAttribute('href')==='#'+k)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ if(k==='preflight')drawFit();
+}
+addEventListener('hashchange',route);route();
+}
+</script>
+</body>
+</html>
