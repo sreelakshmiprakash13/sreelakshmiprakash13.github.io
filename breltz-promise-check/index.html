@@ -197,16 +197,16 @@ pre,.scroll{overflow-x:auto}
     </div>
   </div>
   <details class="why" style="background:var(--bg);border:1px solid var(--line)"><summary>Path to about 12% <span class="ex">illustrative, not a forecast</span></summary>
-  <p>The Commuter is about 30% of website revenue <span class="call">call</span>, so the loop has to cover every bag, not just the hero. Each step is a guess today, and they still leave a gap to close. The 6-week pilot measures the first one, the size and fit fix. The rest are measured over two quarters. The last half point is still unexplained, and Voyager 40L is where I'd look first <span class="call">call</span>.</p>
+  <p>The Commuter is about 30% of website revenue <span class="call">call</span>, so the loop has to cover every bag. Each step is a guess today, and together they still fall short of 12%. The 6-week pilot measures the first one, the size and fit fix. The rest are measured over two quarters. The last half point is still unexplained, and Voyager 40L is where I'd look first <span class="call">call</span>.</p>
   <div id="path"></div>
   <p class="mute" style="margin-top:8px">What's at stake, rough: the margin gap is (18% − 9%) × ₹38 Cr ≈ <b>₹3.4 Cr a year</b> <span class="call">call</span>. Website sales are 55% × ₹38 Cr ≈ ₹21 Cr <span class="call">call</span>. Going from 21.5% to 12% returns keeps roughly <b>₹2 Cr a year</b> of sales from coming back, before the pickup and QC cost on each one. This assumes ₹38 Cr is before returns. A full margin bridge needs order value and product cost, which is a week 1 ask.</p>
   </details>
   <details class="why" open><summary>Why this screen is built this way</summary><ul>
     <li>Aditya wants numbers instead of gut feel in the Monday meeting <span class="call">15:19</span>, so reasons come first and theories come last.</li>
     <li>Each gap gets one owner, because the Myntra listing fix fell between teams <span class="call">12:54</span>.</li>
-    <li>It is website-only because Myntra's report arrives monthly, after the month closes <span class="call">08:29</span>. Myntra shows up as a gap, not a chart.</li>
+    <li>It is website-only because Myntra's report arrives monthly, after the month closes <span class="call">08:29</span>. Myntra sits in the gaps table instead.</li>
   </ul></details>
-  <p class="src">Pilot data: Shopify orders, the weekly returns sheet (has order ID and QC grade), Meta ads read access, Freshdesk export, Amazon and Myntra reports. Aditya offered all of these on the call <span class="call">call</span>.</p>
+  <p class="src">Pilot data: Shopify orders, the weekly returns sheet (has order ID and QC grade), Meta ads read access, Freshdesk export, Amazon and Myntra reports. Aditya offered all of these for the pilot <span class="call">call</span>.</p>
 </section>
 
 <section class="view" id="v-ads">
@@ -286,14 +286,14 @@ pre,.scroll{overflow-x:auto}
   </div>
   <details class="why" open><summary>Why this screen is built this way</summary><ul>
     <li>It fixes the promise where it's made, before money is spent. Today copy goes from the agency to Sneha on WhatsApp, with no product check <span class="call">16:25</span>.</li>
-    <li>Text claims are checked automatically. Scale and colour start as a 4-question checklist, which is honest about what can be built in six weeks.</li>
+    <li>Text claims are checked automatically. Scale and colour start as a 4-question checklist, which is a realistic scope for six weeks.</li>
     <li>The product team owns the truth sheet, so a spec change like February's re-checks every live ad.</li>
   </ul></details>
 </section>
 
 <section class="view" id="v-return">
   <h1>Ask why at the moment of return, and save it if we can</h1>
-  <p class="lede">Pooja said some laptops do fit, the buyer just "haven't used the right compartment" <span class="call">call</span>. This step sits inside the Shopify returns app, before pickup. Unicommerce still processes the return. It asks the reason in plain words, tries a fix, and saves the answer with the order. Tip wording and photos are placeholders for Pooja and Farhan to confirm. If the returns app can't be customised, the same steps run on a short page linked from the return email.</p>
+  <p class="lede">Pooja said that sometimes the laptop does fit and buyers "haven't used the right compartment" <span class="call">call</span>. This step sits inside the Shopify returns app, before pickup. Unicommerce still processes the return. It asks the reason in plain words, tries a fix, and saves the answer with the order. Tip wording and photos are placeholders for Pooja and Farhan to confirm. If the returns app can't be customised, the same steps run on a short page linked from the return email.</p>
   <div class="grid2 g-ret">
     <div class="phone" id="phone" aria-live="polite"></div>
     <div>
@@ -343,7 +343,7 @@ const gaps=[
  ['Colour shot at golden hour','Ananya Dusty Rose reel, run as a paid ad','"Looks more brown in person"',52,'Sneha','Add a daylight end-card; tag the reel "warm filter"'],
  ['Size only as cm in a Specifications tab','Website product page','Amazon shows a person-scale image and returns less',null,'Website team','Add a person-scale photo and a "will my laptop fit?" picker']];
 const path=[['Website customer returns today',21.5,0],['Size and laptop-fit claims fixed',-5,1],['Colour shown in daylight in ads',-2,1],['Saves at return start (compartment tip, swaps)',-1,1],['Fewer two-colour orders in sales',-1,1],['If all four hold (two quarters)',12.5,0]];
-$('path').innerHTML=path.map(p=>`<div class="bar"><span>${p[0]}</span><i class="${p[1]<0?'':p[0].startsWith('If all')?'':'r'}" style="width:${Math.abs(p[1])/21.5*100}%;${p[1]<0?'background:var(--green)':''}"></i><em>${p[1]<0?p[1]+' pts':p[1]+'%'}</em></div>`).join('');
+$('path').innerHTML=path.map(p=>`<div class="bar"><span>${p[0]}</span><i class="${p[1]<0?'':p[0].startsWith('If all')?'':'r'}" style="width:${Math.abs(p[1])/21.5*100}%;${p[1]<0?'background:var(--green)':''}"></i><em>${p[1]<0?p[1]+(p[1]===-1?' pt':' pts'):p[1]+'%'}</em></div>`).join('');
 $('gaps').innerHTML=gaps.map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td><td class="n">${g[3]==null?'—':g[3]}</td><td>${g[4]}</td><td>${g[5]}</td></tr>`).join('');
 
 /* ---------- Ads view ---------- */
