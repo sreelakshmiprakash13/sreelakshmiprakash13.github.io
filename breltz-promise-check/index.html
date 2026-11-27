@@ -38,7 +38,7 @@ main{padding:28px max(4vw,16px) 64px;max-width:1240px}
 .figs strong{display:block;font:600 clamp(28px,3.4vw,38px)/1.1 Spectral,serif}
 .figs small{display:block;margin-top:4px}
 .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
-.g-pf{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}.g-ret{grid-template-columns:minmax(0,auto) minmax(0,1fr)}
+.g-pf{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}.g-ret{grid-template-columns:340px minmax(0,1fr)}
 @media(max-width:860px){.grid2,.g-pf,.g-ret{grid-template-columns:minmax(0,1fr)}}
 .bar{display:grid;grid-template-columns:minmax(120px,15em) minmax(0,1fr) 4.5em;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
 .bar i{display:block;height:12px;border-radius:3px;background:var(--blue)}
@@ -69,7 +69,7 @@ input[type=number]{font:16px Inter,sans-serif;padding:10px;border:1px solid var(
 .ad .cap{padding:10px 12px;font-size:14px}
 .check{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
 .verdict{margin-top:12px;padding:12px;border-radius:8px;font-weight:600}
-.fig{position:relative;min-height:220px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig{position:relative;min-height:190px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
 .phone{width:min(340px,100%);border:10px solid var(--ink);border-radius:32px;padding:20px 16px;min-height:560px;background:var(--bg)}
 .phone h3{font-size:20px}.phone .opt{display:block;width:100%;text-align:left;margin:8px 0;font-weight:500}
 .phone .ok{background:var(--blue-soft);border-radius:10px;padding:12px;font-size:14px;margin:10px 0}
@@ -113,6 +113,15 @@ pre,.scroll{overflow-x:auto}
 .igimg svg{position:absolute;inset:0;width:100%;height:100%}
 .igcap{padding:8px 10px 0;font-size:13px}
 .igcta{margin:8px 10px 10px;padding:8px 10px;border-radius:8px;background:var(--panel);font-weight:600;font-size:13px;display:flex;justify-content:space-between}
+.pfgrid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:1000px){.pfgrid{grid-template-columns:minmax(0,1fr)}}
+.g-pf{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)}
+.check{grid-template-columns:4.6em minmax(0,1fr)}
+.tip{display:flex;gap:10px;align-items:center;background:var(--blue-soft);border-radius:10px;padding:10px;margin:10px 0;font-size:14px}.tip svg{width:86px;height:96px;flex:none}
+.check .tag{align-self:start}
+.box.calcbox{grid-column:1/-1}
+@media(max-width:860px){.g-pf,.g-ret{grid-template-columns:minmax(0,1fr)}}
+.phone .opt.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 .thumb{width:40px;height:40px;border-radius:8px;flex:none;overflow:hidden}
 .thumb svg{width:100%;height:100%}
 .adn{display:flex;gap:10px;align-items:flex-start}
@@ -224,7 +233,7 @@ pre,.scroll{overflow-x:auto}
       <p>During the pilot, Breltz gives read access only <span class="call">call</span>. So the agent prepares each change, and Sneha applies it in Ads Manager. After the pilot, if Sneha agrees to ad-management access, moves under a proposed 20%-of-daily-budget cap can run on their own. Pausing a top ad always needs Sneha.</p>
       <div id="log"></div>
     </div>
-    <div class="box">
+    <div class="box calcbox">
       <h3>When does a high-ROAS ad lose?</h3>
       <p>Change the numbers to see when the "best" ad stops being best.</p>
       <div class="calc">
@@ -254,21 +263,25 @@ pre,.scroll{overflow-x:auto}
       <div class="box" style="margin-top:18px">
         <h3>Product truth · Commuter 28L v2</h3>
         <p style="font-size:14px">Laptop: up to <b>15.6"</b>. A 16" laptop "goes in, but it's tight, the zip strains" <span class="call">call</span>. Built-in padded compartment. Volume 28 L. Colours: Black, Sage Green, Dusty Rose. Daylight swatch photos: to shoot in week 1.</p>
-        <div class="seg" role="group" aria-label="Laptop size" id="lap"></div>
+        <div class="seg" role="group" aria-label="Laptop size" id="lap" style="gap:4px"></div>
         <div class="fig" id="fitfig"><svg id="fitsvg" role="img" aria-label="Laptop fit in the Commuter 28L compartment"></svg></div>
         <p class="mute">When this sheet changes, every live ad and listing is checked again. With this in place, a spec change like February's would be caught.</p>
       </div>
     </div>
     <div>
       <h2 style="margin-top:12px">Draft preview and checks</h2>
+      <div class="pfgrid">
       <div class="ig"><div class="ighead"><span class="av">B</span><b>breltz.bags</b><small>Sponsored · draft</small></div><div class="igimg" id="adimg"></div><div class="igcap" id="adcap"></div><div class="igcta"><span>Shop now</span><span>›</span></div></div>
+      <div>
       <div id="checks"></div>
       <div id="verdict"></div>
       <div class="seg" style="margin-top:12px">
-        <button class="pri" id="sendback">Send back to agency with fixes</button>
+        <button class="pri" id="sendback">Send back to agency</button>
         <button id="approve">Approve</button>
       </div>
       <p class="mute" id="actmsg" aria-live="polite"></p>
+      </div>
+      </div>
     </div>
   </div>
   <details class="why" open><summary>Why this screen is built this way</summary><ul>
@@ -326,12 +339,12 @@ drawCut();
 const gaps=[
  ['Ad copy says "Fits up to 16-inch laptops"','Meta carousel; overlay changed sometime in March','Spec is 15.6"; 16" is tight and the zip strains',118,'Sneha + agency','Change to "Fits 15.6-inch laptops"'],
  ['Size demo uses a small laptop and a petite creator','Riya UGC video, top ad','"Mine doesn’t fit like that" tickets; laptop was probably a 13" Air, to confirm',164,'Sneha','Re-shoot the demo with a 15.6" laptop; A/B test it against the current ad'],
- ['Listing may show the old bag','Myntra Commuter listing','Old photos with the zip-in sleeve; title may still say 30 L; screenshot pending','monthly report','Catalogue owner (to name)','Raise the Myntra category ticket this week'],
+ ['Listing may show the old bag','Myntra Commuter listing','Old photos with the zip-in sleeve; title may still say 30 L; screenshot pending','—','Catalogue owner (to name)','Raise the Myntra category ticket this week'],
  ['Colour shot at golden hour','Ananya Dusty Rose reel, run as a paid ad','"Looks more brown in person"',52,'Sneha','Add a daylight end-card; tag the reel "warm filter"'],
  ['Size only as cm in a Specifications tab','Website product page','Amazon shows a person-scale image and returns less',null,'Website team','Add a person-scale photo and a "will my laptop fit?" picker']];
 const path=[['Website customer returns today',21.5,0],['Size and laptop-fit claims fixed',-5,1],['Colour shown in daylight in ads',-2,1],['Saves at return start (compartment tip, swaps)',-1,1],['Fewer two-colour orders in sales',-1,1],['If all four hold (two quarters)',12.5,0]];
 $('path').innerHTML=path.map(p=>`<div class="bar"><span>${p[0]}</span><i class="${p[1]<0?'':p[0].startsWith('If all')?'':'r'}" style="width:${Math.abs(p[1])/21.5*100}%;${p[1]<0?'background:var(--green)':''}"></i><em>${p[1]<0?p[1]+' pts':p[1]+'%'}</em></div>`).join('');
-$('gaps').innerHTML=gaps.map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td><td class="n">${g[3]==null?'all products':g[3]}</td><td>${g[4]}</td><td>${g[5]}</td></tr>`).join('');
+$('gaps').innerHTML=gaps.map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td><td class="n">${g[3]==null?'—':g[3]}</td><td>${g[4]}</td><td>${g[5]}</td></tr>`).join('');
 
 /* ---------- Ads view ---------- */
 const ads=[
@@ -377,21 +390,24 @@ const drafts=[
  {t:'Carousel · "Fits up to 16-inch laptops"',who:'Agency draft, v3',art:'carousel',head:'Fits up to 16-inch laptops',cap:'MacBook going in · Commuter 28L',
   checks:[['bad','Claim vs spec (auto)','"16-inch" is bigger than the 15.6" limit on the truth sheet. Suggested copy: "Fits 15.6-inch laptops".'],['ok','Product version (checklist)','Shows the v2 built-in compartment.'],['ok','Colour (checklist)','Studio light, no filter.'],['warn','Scale (checklist)','No person in frame. Add a person-scale shot like the Amazon listing.']]},
  {t:'UGC · "What’s in my bag" re-cut',who:'Creator: Riya (RIYA15)',art:'ugc',head:'Laptop, lunch box, bottle: all in',cap:'Shot on phone · wide lens · Commuter 28L Black',
-  checks:[['bad','Laptop shown (checklist)','Agency answer (example): "13-inch". The video shows a full laptop fit, so show a 15.6" laptop.'],['warn','Scale (checklist)','Wide phone lens and a petite creator. Add an on-screen line with the bag size and laptop limit.'],['ok','Claim vs spec (auto)','No size number in the copy.'],['ok','Colour (checklist)','Black, no filter.']]},
+  checks:[['bad','Laptop shown (checklist)','Agency answer <span class="ex">example</span>: "13-inch". The video shows a full laptop fit, so show a 15.6" laptop.'],['warn','Scale (checklist)','Wide phone lens and a petite creator. Add an on-screen line with the bag size and laptop limit.'],['ok','Claim vs spec (auto)','No size number in the copy.'],['ok','Colour (checklist)','Black, no filter.']]},
  {t:'Reel · Dusty Rose at sunset',who:'Creator: Ananya (ANANYA15)',art:'reel',head:'Golden hour, Goa',cap:'Partnership ad · Commuter 28L Dusty Rose',
-  checks:[['bad','Colour (checklist)','Agency answer (example): "golden hour, warm filter". Add a 2-second daylight end-card next to the studio swatch.'],['ok','Claim vs spec (auto)','No size claim.'],['ok','Product version (checklist)','v2.'],['warn','Return history (auto)','Dusty Rose is one of the highest by return % (call). Approve only with the end-card.']]}];
+  checks:[['bad','Colour (checklist)','Agency answer <span class="ex">example</span>: "golden hour, warm filter". Add a 2-second daylight end-card next to the studio swatch.'],['ok','Claim vs spec (auto)','No size claim.'],['ok','Product version (checklist)','v2.'],['warn','Return history (auto)','Dusty Rose is one of the highest by return % <span class="call">call</span>. Approve only with the end-card.']]}];
 const ART={
- carousel:{bg:'#23263a',bg2:'#4b4f6b',bag:'#1b1a1f',lap:16,person:0,sun:0},
- ugc:{bg:'#d9c6ad',bg2:'#efe2cf',bag:'#1b1a1f',lap:13,person:1,sun:0},
- reel:{bg:'#c9775c',bg2:'#f3b77d',bag:'#c99a94',lap:0,person:0,sun:1}};
+ carousel:{bg:'#23263a',bg2:'#4b4f6b',bag:'#1b1a1f',lap:16,person:0,sun:0,mark:[16,240,268,52],tag:'Spec says 15.6"',tx:'r'},
+ ugc:{bg:'#d9c6ad',bg2:'#efe2cf',bag:'#1b1a1f',lap:13,person:1,sun:0,mark:[52,34,116,58],tag:'13" laptop: show 15.6"',tx:'l'},
+ reel:{bg:'#c9775c',bg2:'#f3b77d',bag:'#c99a94',lap:0,person:0,sun:1,mark:[86,52,128,170],tag:'Warm filter: add daylight shot',tx:'l'}};
 function art(k,head){const a=ART[k];const lw=a.lap===16?150:a.lap===13?96:0;
  return `<svg viewBox="0 0 300 300" role="img" aria-label="Draft ad: ${head}"><defs><linearGradient id="g${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a.bg2}"/><stop offset="1" stop-color="${a.bg}"/></linearGradient></defs>
  <rect width="300" height="300" fill="url(#g${k})"/>
  ${a.sun?'<circle cx="230" cy="70" r="34" fill="#ffe0a3" opacity=".9"/><rect width="300" height="300" fill="#ff9a3c" opacity=".18"/>':''}
  ${a.person?'<g fill="#7a6a5c"><circle cx="232" cy="96" r="18"/><rect x="208" y="118" width="48" height="114" rx="22"/></g>':''}
+
+ ${lw?`<rect x="${(a.person?110:150)-lw/2}" y="${a.person?40:44}" width="${lw}" height="${a.person?70:84}" rx="6" fill="#c9ced8" stroke="#8b92a3" stroke-width="2"/><rect x="${(a.person?110:150)-lw/2+6}" y="${a.person?46:50}" width="${lw-12}" height="${a.person?24:30}" rx="3" fill="#aab1bf"/><text x="${a.person?110:150}" y="${a.person?64:71}" text-anchor="middle" font-size="16" font-weight="700" font-family="Inter" fill="#3a3f4d">${a.lap}"</text>`:''}
  <g style="color:${a.bag}" transform="translate(${a.person?40:92},${a.person?64:78}) scale(${a.person?1.4:1.16})"><use href="#bag" width="100" height="120"/></g>
- ${lw?`<rect x="${(a.person?110:150)-lw/2}" y="${a.person?60:24}" width="${lw}" height="${a.person?62:64}" rx="6" fill="#c9ced8" stroke="#8b92a3" stroke-width="2"/><text x="${a.person?110:150}" y="${a.person?97:62}" text-anchor="middle" font-size="16" font-weight="700" font-family="Inter" fill="#3a3f4d">${a.lap}"</text>`:''}
- <rect x="0" y="232" width="300" height="68" fill="#000" opacity=".38"/><text x="150" y="272" text-anchor="middle" fill="#fff" font-size="${head.length>30?15:19}" font-weight="600" font-family="Spectral,serif">${head}</text></svg>`}
+ <rect x="0" y="232" width="300" height="68" fill="#000" opacity=".38"/><text x="150" y="272" text-anchor="middle" fill="#fff" font-size="${head.length>30?15:19}" font-weight="600" font-family="Spectral,serif">${head}</text>
+ ${a.mark?`<rect x="${a.mark[0]}" y="${a.mark[1]}" width="${a.mark[2]}" height="${a.mark[3]}" rx="8" fill="none" stroke="#ff4d3a" stroke-width="3" stroke-dasharray="7 4"/>
+ <g transform="translate(${a.tx==='r'?300-10-(a.tag.length*7+16):10},${a.mark[1]>100?a.mark[1]-34:10})"><rect width="${a.tag.length*7+16}" height="26" rx="13" fill="#ff4d3a"/><text x="${(a.tag.length*7+16)/2}" y="17.5" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="Inter">${a.tag}</text></g>`:''}</svg>`}
 let di=0;
 function drawDraft(){
  $('drafts').innerHTML=drafts.map((d,i)=>`<button aria-pressed="${i===di}" data-i="${i}"><b>${d.t}</b><br><small>${d.who}</small></button>`).join('');
@@ -412,18 +428,17 @@ let lap='15.6';
 const fs=$('fitsvg');
 function drawFit(){
  $('lap').innerHTML=['13','15.6','16'].map(s=>`<button aria-pressed="${s===lap}" data-l="${s}">${s}" laptop</button>`).join('');
- const W=fs.clientWidth||320,H=fs.clientHeight||220,cx=W/2;
- const bw=Math.min(W*0.6,260),bh=H*0.74,bx=cx-bw/2,by=H*0.1;
- const slotW=bw*0.82,sx=cx-slotW/2;
- const lw=slotW*({'13':0.78,'15.6':0.97,'16':1.06}[lap]);
- const over=lap==='16',lx=cx-lw/2;
- const c=getComputedStyle(document.body);
- const ink=c.getPropertyValue('--ink'),blue=c.getPropertyValue('--blue'),red=c.getPropertyValue('--red'),line=c.getPropertyValue('--line'),panel=c.getPropertyValue('--bg');
- fs.innerHTML=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="34" fill="${panel}" stroke="${ink}" stroke-width="2"/>
- <rect x="${sx}" y="${by+26}" width="${slotW}" height="${bh-44}" rx="10" fill="none" stroke="${line}" stroke-width="2" stroke-dasharray="5 4"/>
- <rect x="${lx}" y="${by+34}" width="${lw}" height="${bh*0.62}" rx="6" fill="${over?red:blue}" opacity=".85"/>
- <text x="${cx}" y="${by+34+bh*0.31}" text-anchor="middle" fill="#fff" font-size="15" font-weight="600" font-family="Inter">${lap}"</text>
- <text x="${cx}" y="${H-4}" text-anchor="middle" fill="${over?red:ink}" font-size="13" font-family="Inter">${over?'Tight: zip strains (call)':lap==='13'?'Loose: likely what the top ad shows':'Fits: the official limit'}</text>`;
+ const W2=fs.clientWidth||320,H2=fs.clientHeight||220,cx2=W2/2;
+ const bagH=H2*0.56,bagW=bagH*100/120,by2=H2*0.34,bx2=cx2-bagW/2;
+ const inner=bagW*0.74,lapH=bagH*0.6;
+ const lw2=inner*({'13':0.72,'15.6':0.98,'16':1.14}[lap]);const over2=lap==='16';
+ const c2=getComputedStyle(document.body);const blue2=c2.getPropertyValue('--blue'),red2=c2.getPropertyValue('--red'),ink2=c2.getPropertyValue('--ink');
+ const ly=by2-lapH*0.55;
+ fs.innerHTML=`<rect x="${cx2-lw2/2}" y="${ly}" width="${lw2}" height="${lapH}" rx="5" fill="${over2?red2:blue2}"/><rect x="${cx2-lw2/2+5}" y="${ly+5}" width="${lw2-10}" height="${lapH*0.42}" rx="3" fill="#fff" opacity=".18"/>
+ <text x="${cx2}" y="${ly+lapH*0.32}" text-anchor="middle" fill="#fff" font-size="14" font-weight="700" font-family="Inter">${lap}"</text>
+ <g style="color:#2a2622"><use href="#bag" x="${bx2}" y="${by2-bagH*0.1}" width="${bagW}" height="${bagH*1.1}"/></g>
+ ${over2?`<path d="M${cx2-lw2/2-6} ${ly+lapH*0.5} h-12 M${cx2+lw2/2+6} ${ly+lapH*0.5} h12" stroke="${red2}" stroke-width="3" stroke-linecap="round"/>`:''}
+ <text x="${cx2}" y="${H2-4}" text-anchor="middle" fill="${over2?red2:ink2}" font-size="13" font-family="Inter">${over2?'Too wide: tight, zip strains (call)':lap==='13'?'Loose: likely what the top ad shows':'Fits: the official limit'}</text>`;
 }
 $('lap').addEventListener('click',e=>{const b=e.target.closest('button');if(b){lap=b.dataset.l;drawFit()}});
 const fro=new ResizeObserver(drawFit);fro.observe(fs);
@@ -434,8 +449,8 @@ let rec={},step='start';
 const steps={
  start:{h:'What’s not right with your Commuter 28L?',o:[['My laptop doesn’t fit','fit'],['It’s smaller than I expected','small'],['The colour looks different','colour'],['I ordered two colours, keeping one','two'],['It arrived damaged','dmg'],['Something else','other']]},
  fit:{h:'Which laptop are you carrying?',o:[['13–14 inch','fitok'],['15.6 inch','fitok'],['16 inch','fit16'],['17 inch or bigger','fit17']],set:{'Reason':'Laptop doesn’t fit'}},
- fitok:{h:'It should fit. Try the back compartment',p:'Slide the laptop into the padded compartment against the back panel, not the front pocket. It takes 15 seconds.',o:[['It fits now: keep my bag','saved'],['Still doesn’t fit','ret']],set:{'Fix offered':'Compartment tip'}},
- fit16:{h:'A 16" laptop goes in, but it’s a tight fit',p:'Use the padded back compartment and close the zip slowly. If it still doesn’t work for you, we can swap it for a bag that fits 16" (range to confirm with Farhan).',o:[['It works now: keep my bag','saved'],['Swap for a roomier bag','swap'],['Continue return','ret']],set:{'Promise gap':'Laptop size: ad vs 15.6" spec'}},
+ fitok:{pic:1,h:'It should fit. Try the back compartment',p:'Use the back panel, not the front pocket. It takes 15 seconds.',o:[['It fits now: keep my bag','saved'],['Still doesn’t fit','ret']],set:{'Fix offered':'Compartment tip'}},
+ fit16:{pic:1,h:'A 16" laptop goes in, but it’s a tight fit',p:'Close the zip slowly. If it still doesn’t work for you, we can swap it for a bag that fits 16"',o:[['It works now: keep my bag','saved'],['Swap for a roomier bag','swap'],['Continue return','ret']],set:{'Promise gap':'Laptop size: ad vs 15.6" spec'}},
  fit17:{h:'This bag isn’t made for a 17" laptop',p:'We can swap it for a roomier bag, or you can return it.',o:[['Swap for a roomier bag','swap'],['Continue return','ret']],set:{'Promise gap':'Laptop size: ad vs 15.6" spec'}},
  small:{h:'Where did you see the bag before buying?',o:[['Instagram video or reel','smallv'],['Product photos','ret'],['Somewhere else','ret']],set:{'Reason':'Smaller than expected'}},
  smallv:{h:'Thanks, that helps us fix our videos',p:'[Photo: the bag worn by people of different heights, for scale]',o:[['Keep it after all','saved'],['Continue return','ret']],set:{'Promise gap':'Size demo in video'}},
@@ -448,7 +463,8 @@ const steps={
  ret:{h:'Return requested',p:'Pickup and refund follow Breltz’s return policy.',o:[],set:{'Outcome':'Returned'}}};
 function drawPhone(){
  const s=steps[step];if(s.set)Object.assign(rec,s.set);
- $('phone').innerHTML=`<small>Breltz · Start a return</small><div class="ordercard"><svg viewBox="0 0 100 120" style="color:#1b1a1f"><use href="#bag"/></svg><div><b>Commuter 28L · Black</b><br><span class="mute">Order #BRZ-10482 · example</span></div></div><h3 style="margin-top:8px">${s.h}</h3>${s.p?`<div class="ok">${s.p}</div>`:''}${s.o.map(o=>`<button class="opt" data-go="${o[1]}">${o[0]}</button>`).join('')}`;
+ const COMP=`<div class="tip"><svg viewBox="0 0 100 120" role="img" aria-label="Back compartment"><g style="color:#1b1a1f"><use href="#bag" width="100" height="120"/></g><rect x="26" y="24" width="48" height="56" rx="6" fill="#1d2bd8" opacity=".85"/><path d="M50 4 V30" stroke="#1d2bd8" stroke-width="4" stroke-linecap="round"/><path d="M42 22 L50 31 L58 22" fill="none" stroke="#1d2bd8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Padded back compartment</b><br>Slide the laptop in here.</span></div>`;
+ $('phone').innerHTML=`<small>Breltz · Start a return</small><div class="ordercard"><svg viewBox="0 0 100 120" style="color:#1b1a1f"><use href="#bag"/></svg><div><b>Commuter 28L · Black</b><br><span class="mute">Order #BRZ-10482 · example</span></div></div><h3 style="margin-top:8px">${s.h}</h3>${s.pic?COMP:''}${s.p?`<div class="ok">${s.p}</div>`:''}${s.o.map(o=>`<button class="opt${o[1]==='saved'?' pri':''}" data-go="${o[1]}">${o[0]}</button>`).join('')}`;
  const all={...rec0,...rec};
  $('rec').innerHTML=Object.entries(all).map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('');
 }
